@@ -1,0 +1,324 @@
+* * * CLEX Revision History * * *
+
+3.15   14-AUG-2006
+   Problems fixed:
+      - the tilde expansion in the internal cd (change
+        directory) command did not work in CLEX 3.14,
+        the problem has been corrected
+      - the usage of the <del> key in the history panel
+        has been corrected: press <del> to delete the
+        character from the command line and press
+        <esc> <del> to delete the entry from the panel
+      - the situation when some external command crashes
+        and leaves the non-blocking flag set on standard
+        input is now properly handled
+   New/improved functionality:
+      - the locate file function was replaced by a more
+        efficient panel filter mechanism. The filtering
+        is available in several panel types (ctrl-F)
+      - some key bindings has been redefined for
+        compatibility reasons:
+                                             old        new
+           move cursor left to next word    ctrl-B --> alt-B
+          move cursor right to next word    ctrl-W --> alt-F
+                             delete word    ctrl-D --> alt-D
+                         directory panel     alt-D --> alt-W
+                          bookmark panel     alt-B --> alt-K
+        delete until the end of the line    ctrl-Y -> ctrl-K
+       complete from the command history    ctrl-K --> alt-P
+                      main function menu    ctrl-G --> alt-M
+            insert the full filename   <esc> <tab> -> ctrl-A
+      - (for emacs users) ctrl-G has now the same meaning
+        as ctrl-C (cancel)
+      - user and group names longer than 8 characters were
+        silently truncated in the file panel, such names
+        are now displayed using the '>' mark
+      - user (alt-U) and group (alt-G) information panels
+        have been added
+      - new panel (<esc> <tab>) that summarizes all
+        completion and insertion functions has been added.
+        Type of the completion can be specified using this
+        panel
+      - completion of commands from the history utilizes
+        the same user interface as the name completion
+      - changes made in the bookmark manager can be
+        cancelled
+      - the input line of the directory panel has no longer
+        precedence over the panel contents. You can switch
+        the focus (indicated by cursor bar's visibility)
+        from the input line to the panel and back
+      - it is no longer possible to execute commands
+        directly from within the history panel. It was
+        easy to make a mistake there and execute other
+        command than intended (panel vs input line)
+      - characters '!' and ':' are automatically quoted only
+        if your shell is a C-shell
+      - there is yet another new option in the directory
+        compare panel
+      - configuration parameter SHELLPROG:
+        standard option -c <COMMAND> is appended
+        automatically if it is not specified
+      - configuration parameters CMD_Fn:
+        command parameters $c and $S have been added
+        (cursor position and selected files)
+      - configuration parameters LAYOUTn:
+        there are two new fields: $S and $P
+        (alternative forms of file size and permissions)
+
+3.14   03-NOV-2005
+   New/improved functionality:
+      - directories can be now bookmarked. Bookmarks are
+        automatically saved to a file. Tools for managing
+        bookmarks are provided in the bookmark panel
+      - new configuration parameter KILOBYTE controls
+        whether filesize is displayed in 1000 or 1024 bytes
+        large units
+      - minor code cleanup 
+
+3.13   21-SEP-2005
+   Problems fixed:
+      - the filename completion routine did not handle
+        correctly the special case when a directory and
+        a command in the search path had the same name.
+        Now both files appear in the completion list
+   New/improved functionality:
+      - the undo function (ctrl-Z) has been improved,
+        several editing steps can be undone and the
+        counterpart editing function redo has been added
+          <esc> ctrl-Z = redo
+
+3.12   14-JUN-2005
+   Problems fixed:
+      - users could not save their configuration. This bug
+        was introduced in the previous release and is now
+        fixed
+
+3.11   17-MAY-2005
+   Problems fixed:
+      - the sort order of the directory names in the
+        directory panel was not controlled by the
+        configuration parameter COLLATE
+   New/improved functionality:
+      - the panel used for confirmation of the configuration
+        changes has been merged into the configuration panel
+      - new option has been added to the directory compare
+        panel
+      - if a file cannot be read during data comparison,
+        files are marked as different (previously only
+        an unreadability warning was given)
+      - entries from the command history list can be now
+        deleted with the <del> key
+      - pattern history has been removed from the select
+        files function as it was not really helpfull
+      - configuration parameter SHOW HIDDEN has been
+        cancelled
+      - added support for shifted left and right arrow
+        keys
+
+3.10   11-OCT-2004
+   Numbering scheme change: after 3.1.9 comes 3.10
+   Problems fixed:
+      - user account data could be incomplete on some
+        systems due to improper initialization
+      - user account data was not updated on systems that
+        do not store this information in /etc/passwd
+        (e.g. with NIS); the user account data cache now
+        expires after 5 minutes. Re-reading of the user
+        account data can be also forced with the <esc>
+        key pressed before the re-read command ctrl-R
+      - the number of selected files was not shown correctly
+        after selecting the last file in the panel
+      - improved portability: signal names are printed
+        using strsignal() instead of sys_siglist[]
+        (if strsignal() is supported)
+      - improved portability: GNU make utility is no
+        longer required to build CLEX, standard make
+        is sufficient
+   New/improved functionality:
+      - directory compare function got its own panel which
+        allows finer control over the compare function,
+        press <esc> = to activate it.
+      - locate file function ctrl-F has been enhanced, the
+        whole filename is checked for the entered string,
+        not only its beginning
+      - new locate file function <esc> ctrl-F has been
+        added, it checks if the filename matches the entered
+        pattern
+
+3.1.9   29-APR-2004
+   Problems fixed:
+      - name completion could not complete filenames
+        starting with the '=' character 
+      - attempt to resize the CLEX window (in X)
+        caused an error when
+          "Press <Enter> to continue"
+        was displayed on the screen
+   New/improved functionality:
+      - simple 'cd' commands are processed internally,
+        this means that you can write:
+          cd /my/new/directory
+        to change the working directory
+      - configuration of the file panel layout has been
+        revised:
+        - new LAYOUT syntax is more flexible
+        - three different file panel layouts can be stored
+          in the configuration, you can switch between them
+      - new configuration parameters allow better control
+        over language dependent settings like date/time
+        format:
+          FMT_NUMBER, FMT_DATE, FMT_TIME, COLLATION
+        these parameters replace LOCALE
+      - obsolete configuration parameter WARN_CD
+        has been removed
+      - filename completion is able to deal with quoted
+        filenames. Only backslash quoting \x is supported
+      - handling of different formats of device major
+        and minor numbers has been improved
+      - source code has been revised to comply with the
+        ISO C strict aliasing rules
+
+3.1.8   03-MAR-2003
+   Problems fixed:
+      - configuration parameters C_PANEL_SIZE and
+        D_PANEL_SIZE could not be set to AUTO if AUTO
+        was not the default value
+   New/improved functionality:
+      - on-line help starts with the Table of Contents
+      - command line options --admin, --help, --version
+        are recognized
+      - screen size (columns x lines) is displayed while
+        the CLEX window in X Window System is being resized 
+      - new editing command: ctrl-Z - undo last insert or
+        delete operation
+      - new editing command: ctrl-O - insert the target of
+        a symbolic link into the command line
+      - there are now two compare directories functions:
+          - quick compare - compares file names and types
+          - thorough compare - compares also the contents
+                               of files (file data)
+        keyboard shortcut <esc> = is cancelled to prevent
+        ambiguity
+      - both panels are re-read automatically before
+        doing directory comparison
+      - in the main menu there are now keyboard shortcuts
+        in order to ensure that all file panel functions
+        have a shortcut:
+          ctrl-G + - select all files
+          ctrl-G - - deselect all files
+          ctrl-G Q - quick compare
+          ctrl-G T - thorough compare
+      - a patch that fixes compile problems in the cygwin
+        environment was contributed
+
+3.1.7   15-JAN-2003
+   Problems fixed:
+      - filename completion ignored broken symlinks
+      - filename completion in the current directory used
+        the file panel's data without refresh, now it scans
+        the directory
+      - ctrl-Z key was not recognized on systems which map
+        it to KEY_SUSPEND
+   New/improved functionality:
+      - ctrl-Z (pressed while a command is being executed)
+        suspends only the launched command, not the CLEX
+        (this feature requires POSIX job control)
+      - history panel displays a remark if a command failed
+      - filename completion panel displays file types
+      - filename completion recognizes the command
+        substitution syntax `command`
+      - configuration parameter DIRECTORIES was replaced by
+        D_PANEL_SIZE with more meaningful semantics, two
+        other parameters were renamed
+          COMPLETIONS -> C_PANEL_SIZE
+          HISTORY     -> H_PANEL_SIZE
+        this release recognizes both names. Please save your
+        configuration if CLEX starts with warnings
+      - parameters C_PANEL_SIZE and D_PANEL_SIZE can be set
+        to AUTO (size of one screen without scrolling). AUTO
+        is also the new default value
+      - directory panel does not split the list of directory
+        names into two parts
+      - umask value affects field 'M' (file mode) in the
+        file panel (see LAYOUT in CLEX configuration)
+      - on-line help grammar corrections
+      - help file format was changed to be better human
+        readable
+      - thorough help file consistency checks implemented
+      - substantial reduction of dynamic memory operations
+      - code review and cleanup
+
+3.1.6   23-OCT-2002
+   Problems fixed:
+      - rm (remove) command warning (configuration parameter
+        WARN_RM) worked unreliably in the history panel
+   New/improved functionality:
+      - to quit CLEX press <esc> Q, the redundant <esc> X
+        has been abandoned
+      - new function: <esc> V - print program version
+      - function keys <F2> - <F12> and <tab> work also in
+        the file locating mode
+      - filename completion of the type
+          name=/some/file
+        is performed only if the 'name' is a single word
+        consisting of letters, digits, and the underscore
+        character '_'
+
+3.1.5   01-JUN-2002
+   Problems fixed:
+      - command line in the history panel was missing when
+        the history panel was entered from the main menu
+      - problems with /etc/passwd and /etc/group were
+        treated as errors and caused program exit, now
+        only a warning is given
+   New/improved functionality:
+      - the on-line help was compiled into CLEX. The
+        configuration parameter HELPFILE should not be
+        set unless you have a translated or otherwise
+        customized help stored in an external file
+      - there are three new keyboard shortcuts for changing
+        directories:
+          <esc> /  = root directory
+          <esc> ~  = home directory
+          <esc> .  = parent directory
+      - sorting files by time or size is available in both
+        ascending and descending orders
+      - selected sort order is valid for both file panels
+      - filename completion recognizes shell metacharacters
+        = < > >> | || && &
+      - CLEX uses LFS (Large File Support) if available, LFS
+        allows access to files larger than 2GB
+
+3.1.4   29-APR-2002
+   New/improved functionality:
+      - the file selection mark '*' is a part of the
+        configurable file panel's layout. If you don't
+        use the default, you should update your LAYOUT
+        configuration parameter
+      - navigation in the directory panel is easier, the
+        most recently used directories are listed separately
+      - the command being executed is shown in the xterm
+        window title
+      - no restart is required for CLEX re-configuration
+      - code review and cleanup
+
+3.1.3   09-MAR-2002
+   Problems fixed:
+      - the compare directories function <esc> = has been
+        rewritten to fix several problems
+   New/improved functionality:
+      - if GROUP_FILES is enabled in the configuration:
+         - the . and .. directories are always on the top
+         - devices can now be grouped together, in such
+           a case they are automatically sorted by their
+           major/minor numbers
+
+3.1.2   10-FEB-2002
+   Problems fixed:
+      - PROMPT change caused crash
+
+3.1.1   17-JAN-2002
+   Problems fixed:
+      - crash after editing text in the config panel
+
+3.1.0   15-JAN-2002
+   Initial release of the 3.1 branch

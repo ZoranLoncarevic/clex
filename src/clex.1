@@ -1,0 +1,43 @@
+.TH CLEX 1
+.SH NAME
+clex \- file manager
+.SH SYNOPSIS
+.B clex
+.RI [ option ]
+.SH "DESCRIPTION"
+CLEX is an interactive full-screen file manager. Refer to the
+on-line help for more information about usage.
+.SH OPTIONS
+.TP
+.B \-a,  \-\-admin
+Run CLEX in admin mode. System-wide configuration can be customized in
+admin mode. Write access to the system-wide configuration file is required.
+.TP
+.B \-\-version
+Display program version and some basic information
+(including location of the system-wide configuration file) and exit.
+.TP
+.B \-\-help
+Display help and exit.
+.SH NOTES
+CLEX uses CURSES library.
+.SH FILES
+.TP
+.BI sysconfdir /clexrc
+system-wide configuration file
+.RB ( sysconfdir
+directory is typically
+.I /etc
+or
+.IR /usr/local/etc )
+.TP
+.I ~/.clexrc
+personal configuration file
+.TP
+.I ~/.clexbm
+personal bookmarks file
+.SH AUTHOR
+Copyright (C) 2001-2006 Vlado Potisk <vlado_potisk@clex.sk>
+.SH NOTES
+CLEX web page:
+.B http://www.clex.sk

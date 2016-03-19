@@ -1,0 +1,13 @@
+extern void cx_filteredit_begin(void);
+extern void cx_filteredit_end(void);
+extern void cx_filteredit_left(void);
+extern void cx_filteredit_right(void);
+extern void cx_filteredit_kill(void);
+extern void cx_filteredit_backsp(void);
+extern void cx_filteredit_delchar(void);
+extern void cx_filteredit_delend(void);
+extern void filteredit_insertchar(int);
+extern void filter_update(void);
+extern void filter_off(void);
+extern void cx_filter(void);
+extern void cx_filter_toggle(void);

@@ -1,0 +1,13 @@
+extern void files_initialize(void);
+extern void files_main_prepare(void);
+extern int files_find(const char *);
+extern int changedir(const char *);
+extern void cx_files_cd(void);
+extern void cx_files_cd_root(void);
+extern void cx_files_cd_parent(void);
+extern void cx_files_cd_home(void);
+extern void cx_files_reread(void);
+extern void cx_files_reread_ug(void);
+extern void cx_files_exchange(void);
+extern void cx_files_enter(void);
+extern void cx_files_tab(void);

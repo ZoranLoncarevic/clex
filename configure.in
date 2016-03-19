@@ -1,0 +1,66 @@
+AC_PREREQ(2.57)
+AC_INIT([CLEX File Manager],[3.15],[clex@clex.sk],[clex])
+AM_INIT_AUTOMAKE
+AC_CONFIG_SRCDIR([src/clex.h])
+AC_CONFIG_HEADER([config.h])
+
+# Checks for programs.
+AC_PROG_CC
+if test "$CC" = "gcc" ; then
+	CFLAGS="$CFLAGS -Wall -pedantic"
+fi
+
+# Checks for libraries.
+AC_SEARCH_LIBS([initscr],[ncurses curses],,AC_MSG_ERROR([CLEX requires NCURSES package]))
+
+#
+AC_SYS_LARGEFILE
+
+# Checks for header files.
+AC_HEADER_DIRENT
+AC_HEADER_STDC
+AC_HEADER_MAJOR
+AC_HEADER_SYS_WAIT
+AC_HEADER_TIME
+AC_CHECK_HEADERS([locale.h ncurses.h sys/time.h term.h ncurses/term.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_HEADER_STAT
+AC_C_CONST
+AC_TYPE_UID_T
+AC_TYPE_MODE_T
+AC_TYPE_OFF_T
+AC_TYPE_PID_T
+AC_TYPE_SIZE_T
+AC_TYPE_SIGNAL
+AC_CHECK_MEMBERS([struct stat.st_rdev])
+AC_CHECK_DECLS([sys_siglist],,,
+[
+#include <signal.h>
+#include <unistd.h>
+])
+
+# Checks for library functions.
+AC_FUNC_STRCOLL
+AC_FUNC_STRFTIME
+AC_DEFINE([_GNU_SOURCE],[1],[required for strsignal])
+AC_CHECK_FUNCS([readlink lstat strchr putenv strerror uname notimeout setlocale strsignal])
+
+# Other stuff
+if test "$ac_cv_func_strchr" != yes ; then
+	AC_DEFINE([strchr],[index],[no strchr])
+fi
+if test "$ac_cv_func_lstat" != yes ; then
+	AC_DEFINE([lstat],[stat],[no lstat])
+fi
+if test "$ac_cv_func_strcoll_works" != yes ; then
+	AC_DEFINE([STRCOLL],[strcmp],[no working strcoll])
+else
+	AC_DEFINE([STRCOLL],[strcoll],[working strcoll])
+fi
+if test "$ac_cv_func_strerror" != yes ; then
+	AC_DEFINE([strerror],[my_strerror],[missing function replacement])
+fi
+
+AC_CONFIG_FILES([Makefile clex.spec src/Makefile])
+AC_OUTPUT

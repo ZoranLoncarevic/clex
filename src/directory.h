@@ -1,0 +1,10 @@
+extern void dir_initialize(void);
+extern void dir_reconfig(void);
+extern void dir_main_prepare(void);
+extern void dir_main_panel(void);
+extern void dir_split_prepare(void);
+extern void filepos_save(void);
+extern void filepos_set(void);
+extern void cx_dir_tab(void);
+extern void cx_dir_enter(void);
+extern void cx_dir_bookmark(void);

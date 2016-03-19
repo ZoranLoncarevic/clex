@@ -1,0 +1,15 @@
+extern void bm_initialize(void);
+extern void bm_list_prepare(void);
+extern void bm_mng_prepare(void);
+extern void bm_edit_prepare(void);
+extern void cx_bm_list_enter(void);
+extern void cx_bm_list_bookmark(void);
+extern void cx_bm_mng_edit(void);
+extern void cx_bm_mng_save(void);
+extern void cx_bm_mng_revert(void);
+extern void cx_bm_mng_up(void);
+extern void cx_bm_mng_down(void);
+extern void cx_bm_mng_del(void);
+extern void cx_bm_mng_new(void);
+extern void cx_bm_edit_enter(void);
+extern void cx_bm_edit_compl(void);

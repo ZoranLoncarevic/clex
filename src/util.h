@@ -1,0 +1,11 @@
+extern const char *base_name(const char *);
+extern int substring(const char *, const char *,int);
+extern void *emalloc(size_t);
+extern void *erealloc(void *, size_t);
+extern char *estrdup(const char *);
+extern void pathname_set_directory(const char *);
+extern char *pathname_join(const char *);
+extern size_t dequote_txt(const char *,  size_t, char *);
+extern ssize_t read_fd(int, char *, size_t);
+extern char *read_file(const char *, size_t *, int *);
+extern time_t mod_time(const char *);

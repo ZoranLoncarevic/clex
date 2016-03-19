@@ -1,0 +1,1684 @@
+#
+# CLEX helpfile (English)
+#
+@V=@VERSION@
+############################################################
+@P=changelog @@=what's new
+
+3.15   14-AUG-2006
+   Problems fixed:
+      - the tilde expansion in the internal cd (change
+        directory) command did not work in CLEX 3.14,
+        the problem has been corrected
+      - the usage of the <del> key in the history panel
+        has been corrected: press <del> to delete the
+        character from the command line and press
+        <esc> <del> to delete the entry from the panel
+      - the situation when some external command crashes
+        and leaves the non-blocking flag set on standard
+        input is now properly handled
+   New/improved functionality:
+      - the locate file function was replaced by a more
+        efficient panel filter mechanism. The filtering
+        is available in several panel types (ctrl-F)
+      - some key bindings has been redefined for
+        compatibility reasons
+        ==> new key bindings @@=keys315
+      - (for emacs users) ctrl-G has now the same meaning
+        as ctrl-C (cancel)
+      - user and group names longer than 8 characters were
+        silently truncated in the file panel, such names
+        are now displayed using the '>' mark
+      - user (alt-U) and group (alt-G) information panels
+        have been added
+      - new panel (<esc> <tab>) that summarizes all
+        completion and insertion functions has been added.
+        Type of the completion can be specified using this
+        panel
+      - completion of commands from the history utilizes
+        the same user interface as the name completion
+      - changes made in the bookmark manager can be
+        cancelled
+      - the input line of the directory panel has no longer
+        precedence over the panel contents. You can switch
+        the focus (indicated by cursor bar's visibility)
+        from the input line to the panel and back
+      - it is no longer possible to execute commands
+        directly from within the history panel. It was
+        easy to make a mistake there and execute other
+        command than intended (panel vs input line)
+      - characters '!' and ':' are automatically quoted only
+        if your shell is a C-shell
+      - there is yet another new option in the directory
+        compare panel
+      - configuration parameter SHELLPROG:
+        standard option -c <COMMAND> is appended
+        automatically if it is not specified
+      - configuration parameters CMD_Fn:
+        command parameters $c and $S have been added
+        (cursor position and selected files)
+      - configuration parameters LAYOUTn:
+        there are two new fields: $S and $P
+        (alternative forms of file size and permissions)
+        
+3.14   03-NOV-2005
+   New/improved functionality:
+      - directories can be now bookmarked. Bookmarks are
+        automatically saved to a file. Tools for managing
+        bookmarks are provided in the bookmark panel
+      - new configuration parameter KILOBYTE controls
+        whether filesize is displayed in 1000 or 1024 bytes
+        large units
+      - minor code cleanup
+
+3.13   21-SEP-2005
+   Problems fixed:
+      - the filename completion routine did not handle
+        correctly the special case when a directory and
+        a command in the search path had the same name.
+        Now both files appear in the completion list
+   New/improved functionality:
+      - the undo function (ctrl-Z) has been improved,
+        several editing steps can be undone and the
+        counterpart editing function redo has been added
+          <esc> ctrl-Z = redo
+
+3.12   14-JUN-2005
+   Problems fixed:
+      - users could not save their configuration. This bug
+        was introduced in the previous release and is now
+        fixed
+
+3.11   17-MAY-2005
+   Problems fixed:
+      - the sort order of the directory names in the
+        directory panel was not controlled by the
+        configuration parameter COLLATE
+   New/improved functionality:
+      - the panel used for confirmation of the configuration
+        changes has been merged into the configuration panel
+      - new option has been added to the directory compare
+        panel
+      - if a file cannot be read during data comparison,
+        files are marked as different (previously only
+        an unreadability warning was given)
+      - entries from the command history list can be now
+        deleted with the <del> key
+      - pattern history has been removed from the select
+        files function as it was not really helpful
+      - configuration parameter SHOW HIDDEN has been
+        cancelled
+      - added support for shifted left and right arrow
+        keys
+
+--------------------
+  Details about versions released before 2005 can be found
+  in the ChangeLog file which is part of the CLEX source
+  code package. It can be also downloaded from the CLEX
+  webpage www.clex.sk.
+############################################################
+@P=keys315 @@=new key bindings (CLEX version >= 3.15)
+
+These key bindings have been redefined; use the new keys
+instead of the old ones (please excuse the inconvenience)
+
+In order to make this transition as easy as possible
+CLEX 3.15 recognizes the old keystrokes where indicated (*).
+
+                                         old        new
+     move cursor left to next word      ctrl-B --> alt-B (*)
+    move cursor right to next word      ctrl-W --> alt-F (*)
+                       delete word      ctrl-D --> alt-D (*)
+                   directory panel       alt-D --> alt-W
+                    bookmark panel       alt-B --> alt-K
+  delete until the end of the line      ctrl-Y -> ctrl-K (*)
+ complete from the command history      ctrl-K --> alt-P
+                main function menu      ctrl-G --> alt-M
+          insert the full filename <esc> <tab> -> ctrl-A
+############################################################
+#
+# ToC should contain links to these pages:
+#    bookmarks, compare, completion, config, dir, file, history,
+#    menu, paste, select, sort, user
+#
+@P=ToC @@=TABLE OF CONTENTS (CLEX @VERSION@)
+
+  ==> INDEX @@=index
+
+BASIC INFORMATION
+  ==> How to use this on-line help @@=help
+  ==> Screen overview @@=screen
+  ==> Help with keys @@=keys
+
+WORKING WITH CLEX
+  ==> File panel & command line @@=file
+      In the file panel:
+      ==> Selecting files using patterns @@=select
+      ==> Sorting files @@=sort
+      ==> Comparing directories @@=compare
+  ==> Main function menu @@=menu
+  ==> Name completion @@=completion
+  ==> Directory panel @@=dir
+  ==> Bookmark panel @@=bookmarks
+  ==> Command history panel @@=history
+  ==> Configuration panel @@=config
+  ==> User and group data @@=user
+  ==> Using filters @@=filter
+
+ABOUT CLEX
+  ==> What's new <-- PLEASE READ after installation/upgrade @@=changelog
+  ==> Miscellaneous notes @@=notes
+  ==> About CLEX @@=about
+
+--------------------
+  - please report any errors or typos to clex@clex.sk
+  - you can browse this help also on Internet:
+    http://www.clex.sk/help/
+############################################################
+@P=index @@=Index
+
+A   about CLEX @@=about
+    admin mode (configuration) @@=admin
+    automatic filename quoting @@=quoting
+
+B   bookmark panel (directory bookmarks) @@=bookmarks
+
+C   changelog @@=changelog
+    changing working directory:
+      - the 'cd' command @@=cd
+      - the directory panel @@=dir
+      - the bookmark panel @@=bookmarks
+      - in the file panel (see II. FILES AND DIRECTORIES) @@=file
+    command history (history panel) @@=history
+    command line options @@=options
+    compare directories @@=compare
+    completion (name completion) @@=completion
+    completion/insertion panel @@=paste
+    configuration, admin mode @@=admin
+    configuration, configuration panel @@=config
+
+D   directory panel @@=dir
+
+E   editing:
+      - advanced (file panel, see III. ADVANCED EDITING) @@=file
+      - basic @@=keys_textline
+
+F   file panel @@=file
+    file panel screen @@=screen
+    filename completion (name completion) @@=completion
+    filters @@=filter
+
+G   group information panel @@=user
+
+H   history panel @@=history
+    homepage: http://www.clex.sk
+
+K   keys @@=keys
+
+L   license agreement @@=license
+
+N   name completion @@=completion
+
+M   main function menu (main menu) @@=menu
+
+P   panels:
+      - bookmark panel @@=bookmarks
+      - configuration panel @@=config
+      - directory panel @@=dir
+      - file panel @@=file
+      - history panel @@=history
+    primary panel (working directories) @@=2dirs
+
+Q   quoting of filenames @@=quoting
+
+S   screen overview (file panel screen) @@=screen
+    secondary panel (working directories) @@=2dirs
+    selecting files (file panel, II. FILES AND DIRECTORIES) @@=file
+    selecting files using patterns @@=select
+    sorting filenames @@=sort
+
+T   tilde substitution @@=tilde
+
+U   user information panel @@=user
+
+W   working directories @@=2dirs
+############################################################
+@P=options @@=command line options
+
+These options are recognized when starting CLEX from
+the command line:
+
+-a, --admin  Run CLEX in admin mode. System-wide
+             configuration can be customized in admin mode.
+             Write access to the system-wide configuration
+             file is required.
+             ==> admin mode @@=admin
+
+--version    Display program version and some basic
+             information and exit.
+
+--help       Display help and exit.
+
+############################################################
+@P=help @@=help with on-line help
+
+                     <F1>  display the table of contents
+         ctrl-C or ctrl-G  leave help
+          <up> and <down>  move cursor bar
+<page-up> and <page-down>  move cursor bar
+       <right> or <enter>  follow link to other help-page
+                           (links are highlighted)
+    <left> or <backspace>  go back to previous help-page
+
+On-line help is context sensitive: after pressing <F1> it
+displays the table of contents as its first page and the
+cursor bar is positioned on a link corresponding with
+the currently used panel.
+############################################################
+@P=screen @@=CLEX screen overview
+
+The screen is divided into two areas: the PANEL, where
+various kinds of data are displayed, and the INPUT LINE,
+where a user can enter and edit his/her input.
+
+PANEL  heading ---> /usr/local/bin                      /tmp
+       frame -----> ----------------------------------------
+                /->    07:55  5.120    /DIR  .
+               /-->  23feb01  1.024    /DIR  ..
+       data --<---> >01sep01****650k***exec**perl**********<
+               \-->  12oct99     49k   exec  gzip
+                \->
+       frame -----> ---------------------------------<3/4>--
+       info line--> 0755 rwxr-xr-x   root:sys   acc=22:12
+                    *CLEX*file*manager**********************
+INPUT LINE -------> shell $ echo "Hello, world!"_
+       prompt ------^       ^
+       user's input --------'
+
+There are several types of panels with a corresponding
+input line, e.g. the file panel with the COMMAND LINE
+or the configuration panel.
+
+One of the lines in the panel is highlighted with
+the CURSOR BAR. It is called the CURRENT LINE.
+
+If a line is too long to fit on the screen, it is indicated
+by a highlighted character '>' on the right.
+
+In the right margin in the panel frame there is the line
+number of the current line, and the total number of lines
+in the panel.
+
+The input line occupies only a few lines on the screen,
+but it can contain many lines of text.
+############################################################
+@P=keys @@=frequently used keys
+
+Notation:
+  ctrl-X = press <control> and <x>
+   alt-X = press <alt> and <x>
+           or <meta> and <x>
+           or press first <esc> and then <x>
+           (depends on your terminal/keyboard)
+
+Basic keys available in all panels:
+==> CLEX control keys @@=keys_control
+==> panel scrolling keys @@=keys_scroll
+==> basic editing commands @@=keys_textline
+
+--------------------
+Notes:
+  - working arrow keys are an essential requirement
+  - please read this note if special keys <F1> to <F10>
+    are not working properly on your terminal
+    ==> about function keys @@=keys_fn
+############################################################
+@P=keys_fn @@=problems with function keys
+
+If function keys <F1> to <F10> do not work on your terminal
+as expected, use this procedure until the problem gets
+fixed:
+
+   press alt-1 (or <esc> 1)  for <F1>
+         alt-2 (or <esc> 2)  for <F2>
+          ...
+         alt-9 (or <esc> 9)  for <F9>
+         alt-0 (or <esc> 0)  for <F10>
+
+On some systems the <Fn> keys work properly but <esc> <Fn>
+sequences do not work. You have to press the <esc> key twice
+before pressing <F1> to <F12>.
+
+--------------------
+Note:
+  - <esc> <esc> N  is not  <esc> <Fn>
+############################################################
+@P=keys_scroll @@=panel scrolling keys
+
+These keystrokes scroll a panel:
+
+        <up>  line up
+      <down>  line down
+   <page-up>  page up
+ <page-down>  page down
+<esc> <home>  go to the top of panel
+ <esc> <end>  go to the bottom of panel
+############################################################
+@P=keys_textline @@=basic editing commands
+
+You can use following keys for editing:
+
+MOVE CURSOR
+                  <left>  character left
+                 <right>  character right
+                  <home>  to the beginning of the line
+                   <end>  to the end of the line
+  alt-B or  shift-<left>  word left (back)
+  alt-F or shift-<right>  word right (forward)
+              <esc> <up>  line up
+            <esc> <down>  line down
+
+DELETE
+                <del>  delete the character under the cursor
+                alt-D  delete the word at the cursor
+<backspace> or ctrl-H  delete the character to the left
+               ctrl-K  delete until the end of the line
+               ctrl-U  delete the entire line
+
+INSERT
+  All regular text that you type is inserted, there is no
+  overtype mode. Press ctrl-V to insert special characters.
+
+        ctrl-V <X>  insert the following character X
+  ctrl-V <N><N><N>  insert the code NNN decimal (001 to 255)
+   ctrl-V X <N><N>  insert the code NN hex (01 to FF)
+
+UNDO/REDO
+            ctrl-Z  undo (reverse the last insert
+                          or delete operation)
+      <esc> ctrl-Z  redo (revert to the state before undo)
+
+Note:
+--------------------
+  - unprintable characters are displayed as highlighted
+    question marks '?'. If you put the cursor over such
+    character, you can see its ASCII value
+############################################################
+@P=keys_control @@=CLEX control commands
+
+These are the keys to remember:
+
+ctrl-C or ctrl-G  cancel function or leave the current panel
+           alt-M  invoke main function menu
+          ctrl-L  redraw screen
+            <F1>  on-line help
+           alt-Q  quit program
+############################################################
+@P=file @@=file panel
+
+Working with the file panel is the basic operation mode.
+You can inspect files, change directories, create commands
+in the command line, and execute them.
+==> introduction @@=file_intro
+
+I. ACCESS TO OTHER PANELS
+           alt-M  go to the main function menu
+                  ==> main function menu @@=menu
+           alt-W  go to the directory panel
+                  ==> change working directory @@=dir
+           alt-K  go to the bookmark panel
+                  ==> directory bookmarks @@=bookmarks
+           alt-C  go to the program configuration panel
+                  ==> configuring CLEX @@=config
+           alt-S  go to the sort panel
+                  ==> change sort order for files @@=sort
+           alt-H  go to the command history panel
+                  ==> command history list @@=history
+ alt-U and alt-G  go to the user/group panel
+                  ==> user and group information @@=user
+     <esc> <tab>  go to the completion/insertion panel
+                  ==> complete/insert text at the input line @@=paste
+
+II. FILES AND DIRECTORIES
+  1) Changing working directory
+         <esc> /  change into the root directory
+         <esc> .  change into the parent (..) directory
+         <esc> ~  change into your home directory
+         <enter>  several functions,
+                  see below in 'II.3 Miscellaneous'
+           alt-W  go to the directory panel
+           alt-K  go to the bookmark panel
+                  (see above in 'I. OTHER PANELS')
+
+                  See also:
+                  ==> the 'cd' command @@=cd
+
+  2) Selecting files
+     Selected names are to be used in commands, see the
+     paragraph 'III.3 building commands' below. Directories
+     . and .. cannot be selected.
+
+        <insert>  select/deselect current file
+          ctrl-T  ditto
+           alt-+  select files that match pattern
+           alt--  deselect files that match pattern
+                  ==> pattern matching rules @@=select
+           alt-*  invert selection
+   (in the menu)  select all files
+   (in the menu)  deselect all files
+           alt-=  compare files in both directories
+                  ==> how CLEX compares files @@=compare
+
+  3) Miscellaneous
+          ctrl-R  re-read the contents of the directory,
+                  i.e. refresh the file panel
+    <esc> ctrl-R  same as ctrl-R, but user account data
+                  gets reloaded as well
+                  (this is rarely needed because CLEX takes
+                  care of it automatically)
+                  ==> user account data caching @@=accounts
+          ctrl-X  exchange primary <--> secondary panel
+          ctrl-F  panel filter
+                  ==> how to use the panel filter @@=filter
+         <enter>  three functions:
+                  if there is a command in the command line:
+                     <enter> = execute the current command
+                  otherwise if current file is a directory:
+                     <enter> = change into this directory
+                  otherwise if current file is executable:
+                     <enter> = insert './file' into the
+                               command line
+   <esc> <enter>  change into a directory
+
+III. ADVANCED EDITING
+  1) Inserting (pasting) names into the command line
+           <tab>  insert or complete
+                  ==> using the <tab> key @@=tab
+            <F2>  insert the name of the current file
+      <esc> <F2>  insert the names of all selected files
+          ctrl-A  insert the full pathname of the current
+                  file: /path/to/file
+          ctrl-E  insert the name of the secondary
+                  working directory
+    <esc> ctrl-E  insert the name of the current working
+                  directory
+                  ==> about working directories @@=2dirs
+          ctrl-O  insert the target of a symbolic link
+
+  2) Filename completion
+           <tab>  insert or complete
+                  ==> using the <tab> key @@=tab
+
+  3) Building commands
+            <F2>  insert the name of the current file
+    <F3> - <F12>  insert a command:
+                  <F3> = view  <F4> = edit     <F5> = copy
+                  <F6> = move  <F7> = make dir <F8> = delete
+                  <F9> = print <F10> to <F12> = user defined
+      <esc> <Fn>  The commands above normally work with the
+                  current file. If you press <esc> before
+                  <F2> - <F12> then they work with the
+                  selected files.
+         <enter>  execute the command
+
+                  All inserted filenames are quoted.
+                  ==> automatic quoting @@=quoting
+
+  4) Command history
+          ctrl-P  recall the previous command from the
+                  history list
+          ctrl-N  recall the next command
+           alt-P  complete command, i.e. search the history
+                  for command(s) matching the text in the
+                  command line
+           alt-H  go to the history panel
+                  (see above in 'I. OTHER PANELS')
+
+  A menu of selected functions can be found in the
+  completion/insertion panel. Press <esc> <tab> to
+  display it.
+  ==> completion/insertion panel @@=paste
+############################################################
+@P=accounts @@=user account data
+
+CLEX internally caches the data about user and group
+accounts. This data is mainly used to obtain the file
+owners' names.
+
+CLEX automatically monitors /etc/passwd and /etc/group
+system files and detects any changes immediately.
+
+Account data may be also stored outside of these files,
+e.g. in a network database called NIS (this is a seldom
+used feature). The user account data cache expires after
+five minutes, so it can take up to five minutes before
+CLEX detects any modifications that have been made.
+
+To overcome this limitation you can press <esc> before
+ctrl-R to force immediate refresh of the user data cache.
+############################################################
+@P=file_intro @@=file panel introduction
+
+You can see two directory names on the top of the file panel
+screen: the current working directory on the left and the
+secondary working directory on the right.
+==> working directories @@=2dirs
+
+The contents of the current working directory are listed in
+the file panel on the screen. One file is highlighted with
+the cursor bar. It is called the current file, additional
+information about it is displayed in the info line.
+
+The layout of the file panel screen is configurable;
+the following data may be shown in the listing of files
+or in the info line:
+    - name of the file
+    - where the symbolic link points to (links only)
+    - date or time of last file modification
+    - date or time of last file access
+    - date or time of last inode change
+    - file size in bytes, KB, or MB
+      or device minor and major numbers (devices only)
+    - whether it is a symbolic link (indicated by -> )
+    - type of file:
+        [none]  plain file
+        exec    plain file, executable
+        suid    executable file with set-UID bit set
+        Suid    set-UID file owned by root
+        sgid    executable file with set-GID bit set
+        /DIR    directory
+        /MNT    directory, active mount point
+        Bdev    block device
+        Cdev    character device
+        FIFO    FIFO; FIFOs are also called named pipes
+        SOCK    socket
+        spec    special file, i.e. anything else
+         ??     type could not be determined due to an error
+    - whether the file is selected (indicated by * )
+    - permission bits (as octal number and/or as a string)
+    - owner and group
+    - number of hard links or an indicator of multiple links
+
+The number of selected files (if any) is shown in the
+panel frame along with the line numbers.
+
+The command line occupies only a few lines on the screen,
+but it can contain many lines of text. Here you type and
+edit commands to be executed. The prompt is configurable.
+
+--------------------
+Notes:
+  - /DIR and /MNT - CLEX might not detect mount points
+    created with  mount --bind  or  mount --move
+    available on modern linux kernels
+  - time of the day instead of date is displayed for times
+    within the last 18 hours
+  - device minor numbers are shown in hexadecimal
+  - owner and group names are limited to 9 characters here,
+    visit the user or group information panel to see the
+    full names
+############################################################
+@P=2dirs @@=working directories
+
+There are two file panels and two corresponding working
+directories:
+  1) The contents of the normal current working directory
+     are listed in the primary file panel on the screen.
+  2) The so-called secondary working directory is used as
+     a destination directory for copy and move commands.
+     It is associated with the secondary file panel which
+     is not displayed on the screen.
+
+Here are some related functions:
+       ctrl-X  exchange primary <--> secondary panel
+        alt-=  compare files in both directories
+               and mark differences
+       ctrl-E  insert the name of the secondary working
+               directory
+ <esc> ctrl-E  insert the name of the current working
+               directory
+<F5> and <F6>  commands COPY and MOVE normally copy and move
+               files from the current directory to the
+               secondary working directory
+############################################################
+@P=quoting @@=automatic filename quoting
+
+CLEX correctly handles special characters in filenames.
+For example: in order to delete a file named '*' (asterisk)
+it generates the correct command 'rm \*', and not the
+incorrect and disastrous 'rm *'.
+
+Please note that automatic quoting applies only to
+filenames being inserted into the command line
+(<tab> and keys <F2> to <F12>).
+
+See also:
+==> configuration parameter QUOTE @@=config_other
+############################################################
+@P=tab @@=functions of the <tab> key
+
+The <tab> key has two really useful functions in the
+file panel:
+
+1) if the cursor stands within or immediately after a word,
+   <tab> attempts to complete it
+   ==> name completion @@=completion
+
+2) otherwise (if there is nothing to complete)
+   <tab> inserts text into the command line:
+    a) if a command name is expected (it is the first word
+       in the command) and the current file is an executable
+       file or a directory, then it inserts:
+           ./executable
+       or
+           directory/
+    b) if an argument is expected (not the first word in the
+       command), it inserts the name of the current file:
+           file
+
+--------------------
+Notes:
+  - if you just want to insert filename(s) without any
+    completion, you might also use the <F2> key
+  - all inserted filenames are correctly quoted
+    ==> automatic quoting @@=quoting
+############################################################
+@P=filter @@=ctrl-F  - panel filter
+
+This function helps you to find an entry in a long listing
+quickly. It is available in the file panel (file names),
+the directory panel (directory names), the history panel
+(commands), and the user/group panels (user names).
+
+There are two filtering modes:
+  - filter expression is a substring
+      this is the default mode.
+  - filter expression is a pattern
+      this mode is available in the file panel only and is
+      is automatically selected if the filter expression
+      contains wildcards: * ? or [].
+      ==> pattern matching details @@=patterns
+
+Type in some:
+  - string appearing in the entry, or
+  - pattern matching the filename, respectively.
+While you type, the panel contents shrink to display only
+those entries that match the filter expression you have
+entered.
+
+All panel functions are available while the panel filter is
+active. Finally press:
+  <enter> - to cancel the panel filter
+            (see the note below)
+   ctrl-F - to return to the input line while the filter
+            remains active. Repeated ctrl-F will bring
+            you back to the filter expression.
+
+--------------------
+Notes:
+  - the filter in the directory panel cannot be cancelled
+    (you can delete the filter expression though). This
+    prevents an undesired interaction between filtering
+    and compacting of the directory names.
+  - warning 'pattern is incomplete' is shown when a closing
+    quote or a closing brace is missing
+############################################################
+@P=compare @@=alt-=  - comparing directories
+
+Files in the current working directory (primary panel) and
+files in the secondary working directory (secondary panel)
+are compared with each other and the differences are marked
+with selection marks.
+
+Files which are the same in both directories are not
+selected and files which do not appear in both directories
+or are different are selected.
+
+There are six comparison levels. In level 0 are two files
+equal if they have the same name and the same type, In
+addition to this level, the file size, file ownership and
+access permissions (the file mode) and/or the file data
+(contents of the files) are compared in levels 1 to 5.
+
+In level 0 and 1 there is relaxed type checking: symbolic
+links are treated as files of the same type.
+
+Starting from level 2 there is exact type checking: normal
+files and symbolic links are considered not equal.
+
+Select the desired level with the cursor bar or press the
+corresponding key 0 to 5.
+
+--------------------
+Notes:
+   - both directories are automatically re-read before
+     comparison
+   - only the data of plain files is compared
+############################################################
+@P=bm_manager @@=bookmark manager
+
+The bookmark manager is accessible directly from the
+bookmark panel and provides set of functions needed
+for the bookmark list maintenance:
+
+               D  move the entry down
+               U  move the entry up
+   <insert> or I  insert a new entry
+      <del> or R  remove the bookmark from the list
+         <enter>  edit the current bookmark
+
+After finishing your work just leave the panel. The data
+are saved automatically, there is no SAVE function. In
+the case you change your mind and do not want to save
+the modified bookmark list, select '--> Revert' from the
+top of the panel, then start again or leave the panel.
+
+--------------------
+Note:
+   - bookmarked directory names must be absolute
+     directories, i.e. starting from the root directory /
+############################################################
+@P=bookmarks @@=alt-K  - bookmark panel
+
+Bookmarks are a list of directory names you wish to record.
+They are preserved even when you exit CLEX.
+
+To add a bookmark:
+      - go to the directory you wish to bookmark
+      - enter the bookmark panel and select
+        '-->Bookmark current working directory'
+
+More functions (edit, delete, etc.) can be found in the
+bookmark manager - follow the '--> Manage bookmarks' link.
+==> bookmark manager @@=bm_manager
+
+--------------------
+Notes:
+   - bookmarks are stored in a file named .clexbm in user's
+     home directory
+   - concurrent CLEX sessions: bookmarks changed in another
+     session are loaded automatically every time the
+     bookmark panel is entered
+
+############################################################
+@P=dir @@=alt-W  - changing working directory
+
+The directory panel allows you to change the working
+directory using any of the following methods:
+
+1) Choosing directory name from the panel
+    CLEX maintains a list of recently visited directories
+    to help you to return to a previously used directory
+    easily.
+
+    The list is sorted alphabetically and is compacted.
+    ==> what is compacting @@=compacting
+
+    Simply highlight the requested directory with the
+    cursor bar and press <enter>. A new list will appear
+    in the panel showing the chosen directory split into
+    components. Confirm the requested directory again
+    with <enter>.
+
+    The panel filter (ctrl-F) can be used for finding
+    directory names in the panel.
+    ==> how to use the panel filter @@=filter
+
+2) Entering new directory name
+    Either press the <tab> key to insert the current name
+    from the panel to the empty input line or simply start
+    to type in the name of the new working directory. All
+    editing functions are available.
+     ==> editing text @@=keys_textline
+    With the <tab> key you can try to complete a partial
+    directory name.
+     ==> name completion @@=completion
+    Finally press <enter>.
+
+When the input line or the panel is being used, the focus
+automatically changes accordingly. The focus is indicated
+by the cursor bar's visibility and by highlighting of the
+input line prompt. Which directory name has the focus is
+important when you press the <enter>.
+
+3) Choosing directory name from the bookmark list
+    Follow the '--> Bookmarks' link (or press alt-K)
+    to switch to the bookmark panel and then select
+    a directory from the list.
+    ==> bookmark panel @@=bookmarks
+
+Note that CLEX performs tilde substitution.
+==> tilde substitution @@=tilde
+
+If an error occurs (e.g. directory not found), either
+correct the directory name and try again or press ctrl-C
+(or ctrl-G) to cancel the operation and leave the
+directory panel.
+
+--------------------
+Please note that there are also convenient methods
+to change the working directory without using
+the directory panel:
+
+- make use of the 'cd' command in the command line
+  ==> the 'cd' command @@=cd
+
+- traverse the directory tree:
+      move the file panel cursor bar to the requested
+      directory and press <esc> <enter>. The <esc> can
+      be omitted if the command line is empty.
+
+- use the shortcuts for frequently used change
+  directory commands:
+        alt-/  change into the root directory
+        alt-.  change into the parent (..) directory
+        alt-~  change into your home directory
+############################################################
+@P=compacting @@=compacted directory list
+
+If there are two directories in the list named for example
+/usr and /usr/X11R6/lib/X11/fonts/Type1, the former is
+considered to be contained in the latter and only the
+longer name appears in the list.
+
+If you then choose /usr/X11R6/lib/X11/fonts/Type1 from the
+list, CLEX splits it into a list of components like this:
+  /usr/X11R6/lib/X11/fonts/Type1
+  /usr/X11R6/lib/X11/fonts
+  /usr/X11R6/lib/X11
+  /usr/X11R6/lib
+  /usr/X11R6
+  /usr
+  /
+and the /usr directory from our example reappears
+in the panel this way.
+############################################################
+@P=cd @@=the 'cd' command
+
+The 'cd' command changes the current directory. Simply type
+  cd /some/directory
+at the command line and press <ENTER>.
+
+To make it work, CLEX treats the 'cd' command as a special
+case and processes it internally.
+
+It is required that all special shell characters occurring
+in the directory name are quoted with a backslash, otherwise
+the command will not be processed internally. The tilde
+substitution is supported though.
+==> tilde substitution @@=tilde
+
+The 'cd' command is an alternative to the directory panel.
+==> directory panel @@=dir
+
+Examples:
+  this command
+    cd /var/log
+  will be processed internally and will change the
+  working directory, while this command
+    cd /dev ; ls -l lp*
+  will be executed normally, i.e. by a separate process and
+  the effect of 'cd' will be lost after returning to CLEX.
+
+--------------------
+Notes:
+  - the special shell characters mentioned above
+    are listed here:
+    ==> QUOTE parameter @@=config_other
+############################################################
+@P=tilde @@=tilde substitution
+
+If the directory name begins with a tilde:
+~         - the tilde will be substituted with your home
+            directory
+~username - if you append a username after the tilde, it
+            will be substituted with the home directory of
+            the the specified user. If no such user is
+            found, then the original text is left unchanged
+
+Examples:
+    ~root - the home directory of the user root
+    ~/bin - the subdirectory bin in your home directory
+############################################################
+@P=history @@=alt-H  - command history
+
+The history panel offers advanced functions for work with
+the command line history list. The most common tasks can be
+accomplished directly from the file panel: see ctrl-P,
+ctrl-N, and alt-P.
+
+In the history panel you can browse the list of recently
+executed commands, execute a chosen command, or insert the
+command(s) to the command line and edit them as required,
+for example you can easily combine two or more previously
+executed commands into one new command.
+
+Help with keys:
+                   ==> moving cursor bar @@=keys_scroll
+                   ==> editing text @@=keys_textline
+          <enter>  execute the command in the command line.
+                   If the command line is empty, the
+                   current command from the history list
+                   will be executed
+            <tab>  insert the text of the current command
+                   from the panel to the command line
+      <esc> <del>  delete the entry from the history list
+           ctrl-F  activate the filter mode
+                   ==> the panel filter @@=filter
+ ctrl-C or ctrl-G  leave the history panel (changes made
+                   in the command line are preserved)
+############################################################
+@P=completion @@=name completion
+
+After pressing the <tab> key, CLEX attempts to complete any
+name (word) found at the cursor position. There are 5 types
+of name completion and the completion method is chosen
+automatically depending on the context:
+ - command names
+     the word to be completed is the first word in
+     a command; if no directory is specified, $PATH
+     is searched
+ - directory names
+     used in the directory panel
+ - user names
+     for names beginning with ~
+     (~username = user's home directory)
+ - environment variables
+     for names beginning with $
+ - filenames
+     this general type of completion is performed
+     in all other cases
+
+When finer control over the name completion is required,
+use the completion/insertion panel (<esc> <tab>).
+==> completion/insertion panel @@=paste
+
+Filename completion tries to recognize certain shell
+metacharacters and completes filenames also in these
+situations:
+     name=/some/file           - name must be a single word
+     command </some/file       - also '>' and '>>'
+     command ;  other_command
+     command &  other_command
+     command || other_command  - also '&&'
+     command |  other_command
+     `command`
+
+If there is no completion possibility, you will get
+a warning. If there is only one completion possibility,
+CLEX completes the name, otherwise a list of completion
+candidates appears on the screen. In case this list would
+be too long, only the next character will be suggested.
+
+--------------------
+Note:
+ - if the special characters mentioned above (=><;&|`) are
+   part of a filename or if quoting is used, the filename
+   completion will be probably not able to complete names
+   properly
+############################################################
+@P=paste @@=<esc> <tab>  - completion/insertion panel
+
+This panel summarizes all editing functions from the file
+panel that complete text or insert text into the command
+line.
+
+Completion functions:
+  - general name completion
+  - name completion of specified type (5 functions)
+  - command completion from the history list
+
+Insert functions:
+  - insert filename(s) (3 functions)
+  - insert the directory name (2 functions)
+  - insert the symbolic link target
+############################################################
+@P=menu @@=alt-M  - main function menu
+
+This is a self-explaining menu of all important file panel
+functions. All you need to do is press alt-M to display it.
+
+The main menu is available only in the file panel. Most of
+its functions can be activated directly (without going into
+this menu) using shortcuts which are displayed in the menu
+for your convenience.
+
+The individual main menu functions are described here:
+==> file panel @@=file
+
+--------------------
+Note:
+ - on some PC keyboards the <MENU> key activates the main
+   menu as well (this key is located next to the right
+   <CTRL> key)
+############################################################
+@P=sort @@=alt-S  - changing sort order
+
+Select one of file sort orders on the menu in the sort panel
+and press <enter> to confirm. The sort order affects only
+the way the filenames are displayed and is valid for both
+file panels. Each time you start CLEX, the sort order is set
+to 'sort by name'.
+
+See also the GROUP_FILES configuration parameter. Files are
+first grouped and then the groups are sorted. See also the
+COLLATION parameter, there are two collate sequences for
+sorting by name.
+==> configuring CLEX @@=config_app
+
+--------------------
+Notes:
+  - the sort by extension (filename suffix) considers
+    a file named '.file' to be a so called hidden file
+    without an extension
+  - the unusual 'sort by reversed name' option is useful
+    in sendmail queue directories, where files like
+    'qf1234', 'df1234', and 'xf1234' belong together
+############################################################
+@P=user @@=alt-U / alt-G  - user / group information
+
+These twin panels show the list of user / group IDs with
+corresponding names that CLEX has saved during the last file
+panel read.
+
+The data can be only examined, not modified, that's why
+there are no functions defined in these panels. Filtering
+(ctrl-F) is available though.
+==> the panel filter @@=filter
+############################################################
+@P=config @@=alt-C  - configuring CLEX
+
+There are over 30 parameters controlling the program's
+behavior.
+==> introduction @@=config_intro
+
+   FRAME   CMD_LINES   XTERM_TITLE   GROUP_FILES   PROMPT
+   LAYOUT1   LAYOUT2   LAYOUT3   ACTIVE_LAYOUT   KILOBYTE
+   FMT_NUMBER   FMT_TIME   FMT_DATE   COLLATION
+   ==> configuring appearance @@=config_app
+
+   SHELLPROG   CMD_F3 ... CMD_F12
+   WARN_RM   WARN_LONG   WARN_SELECT
+   ==> configuring command execution @@=config_cmd
+
+   DIR2   HELPFILE   QUOTE
+   C_PANEL_SIZE   D_PANEL_SIZE   H_PANEL_SIZE
+   ==> other configuration parameters  @@=config_other
+############################################################
+@P=config_intro @@=configuration process
+
+Eech user can customize his/her personal CLEX settings
+using the configuration panel. Program settings can be
+(and should be) saved to a configuration file and thus made
+permanent. Unsaved settings are lost when you exit CLEX.
+
+Choose one of the function in the top of the panel
+(Cancel, Accept, or Accept+Save) to finish the work
+in the configuration panel.
+
+Standard configuration values apply to all parameters which
+are not explicitly set by the user. These default values
+are built into the CLEX, but administrators can override
+them in the system-wide configuration file.
+==> configuring CLEX in admin mode @@=admin
+
+Help with keys:
+         ==> moving cursor bar @@=keys_scroll
+    <enter>  edit parameter
+          S  set parameter to standard value (default)
+          O  set parameter to original value
+
+Files:
+  - personal configuration file:
+     .clexrc in user's home directory
+  - system-wide configuration file:
+      @CONFIG_FILE@
+  ==> please read this security advice @@=security
+
+--------------------
+Note:
+   - concurrent CLEX sessions: configuration saved in one
+     session does not affect other running sessions, only
+     newly started programs. Every time you save the
+     configuration, the previous one gets overwritten.
+############################################################
+@P=config_app @@=list of configurable parameters (1)
+
+The parameters below affect the program's visual
+appearance.
+
+Warning: do not change parameters you do not understand.
+If you are unsure, test the new value before saving the
+configuration. If any problems occur, reset the parameter
+to standard value.
+
+FRAME         Choose a character for drawing horizontal
+              lines on the screen. Try all settings and
+              choose which one looks best on your screen.
+              The option 'line graphics' does not work
+              on some terminals.
+
+CMD_LINES     Number of lines (2-4) that the command line
+              (or input line) occupies on the screen.
+
+XTERM_TITLE   Change the title of the terminal window when
+              CLEX is run in X Window environment. CLEX
+              tries to restore the original title at exit.
+
+              The title is:
+                clex: user@host     - ready
+                clex: command       - executing command
+                clex: (command)     - execution is finished
+
+              You can set this parameter to 'yes', 'no',
+              or AUTO. The AUTO setting checks the terminal
+              type before changing the title.
+              Here are the details:
+              ==> changing xterm title @@=xterm
+
+GROUP_FILES   If enabled, CLEX will group files of the
+              same type together. Files will be displayed
+              in this order:
+                 - directories first (*1)
+                 - then special files
+                 - then plain files
+              or alternatively:
+                 - directories (*1)
+                 - block devices (*2)
+                 - character devices (*2)
+                 - other special files
+                 - plain files
+
+              Note 1: directories . and .. will be always
+                      on the top
+              Note 2: despite the selected sort order,
+                      devices will be sorted by their
+                      major and minor numbers.
+                      ==> sort order for files @@=sort
+
+PROMPT        Command line prompt. Enter AUTO here to use
+              the shell's name as the prompt.
+              ==> related parameter: SHELLPROG @@=config_cmd
+
+LAYOUT1       File panel layout. Format is:
+                  <file_panel_fields>|<info_line_fields>
+              where 'fields' is a list of fields to be
+              displayed.
+              ==> configuring file panel layout @@=layout
+
+LAYOUT2       Alternative file panel layout.
+LAYOUT3       Alternative file panel layout.
+              ==> configuring file panel layout @@=layout
+
+ACTIVE_LAYOUT Pick one of the available layouts (1-3).
+
+KILOBYTE      Select your preferred definition of
+              one kilobyte (megabyte, etc.) The filesize
+              is displayed according to this parameter.
+
+              1000: the prefix kilo means thousand
+              1024: for computer professionals one kilobyte
+                    is traditionally 1024 bytes. This is now
+                    written as 1 KiB according to the IEC
+                    International Standard 60027-2.
+
+FMT_NUMBER    Choose dot or comma as the thousands separator
+              for displaying file sizes,
+              standard is AUTO (autodetect).
+
+FMT_TIME      Select 12 or 24 hour clock,
+              standard is AUTO (autodetect).
+
+FMT_DATE      This is the date format (combination of the
+              day, month, and year). Standard is AUTO for
+              autodetect, but setting it explicitly gives
+              you more possibilities.
+              ==> how to set date format @@=date
+
+COLLATION     There are two ways to sort filenames by name.
+              Those two character collation sequences are:
+              - byte order - based on the character encoding
+                as used by the computer, typically the ASCII
+                code
+              - dictionary order - based on the human
+                language as set by your locale, it takes
+                in account case folding, accented
+                characters, etc.
+
+--------------------
+Notes:
+ - the autodetect feature for FMT_XXX values reads
+   the current locale setting, the COLLATION also
+   makes use of the locale (a locale is a set of
+   language and cultural rules), that's why your
+   locale should be properly set
+ - if you have superuser privileges, the word ROOT is
+   included with the prompt to remind you to be careful
+############################################################
+@P=date @@=setting the date format
+
+Following letters are used to compose the date format,
+simply combine them together:
+  day of month:
+    d - two digits (01 to 31)
+    D - like 'd', but without the leading zero (1 to 31)
+  month:
+    m - two digits (01 to 12)
+    M - three letter acronym (jan to dec)
+  year:
+    y - last two digits (00 to 99)
+    Y - all four digits (e.g. 2004)
+
+Examples:
+  DMy       1mar04
+  d-M-Y    01-mar-2004
+  d.m.y    31.12.03
+  y/m/d    03/12/31
+
+--------------------
+Note:
+ - the length of the resulting date string should not
+   exceed 11 characters
+############################################################
+@P=config_cmd @@=list of configurable parameters (2)
+
+These parameters control the execution of commands.
+
+Warning: do not change parameters you do not understand.
+If you are unsure, test the new value before saving the
+configuration. If any problems occur, reset the parameter
+to standard value.
+
+SHELLPROG     All commands are executed by this program.
+              Enter the complete command, i.e. the full
+              pathname of the shell, all required options,
+              and the word <COMMAND> at the place of the
+              actual command. Type the word <COMMAND>
+              literally as shown here. For example:
+                /bin/sh -c <COMMAND>
+              which can be shortened to:
+                /bin/sh
+              because the standard option -c <COMMAND> is
+              appended automatically whenever the <COMMAND>
+              is missing. 
+
+              Set this parameter to AUTO to use your login
+              shell, this is the recommended setting.
+
+CMD_F3        <F3> = view file(s)
+CMD_F4        <F4> = edit file(s)
+CMD_F5        <F5> = copy file(s)
+CMD_F6        <F6> = move file(s)
+CMD_F7        <F7> = make directory
+CMD_F8        <F8> = remove file(s)
+CMD_F9        <F9> = print file(s)
+CMD_F10       <F10> = user defined
+CMD_F11       <F11> = user defined
+CMD_F12       <F12> = user defined
+
+              All these parameters are templates used to
+              build commands each time you press one of the
+              function keys <F3> to <F12>. The following
+              substitutions are performed before the
+              specified text is inserted into the command
+              line:
+                $1 --> name of the current working directory
+                $2 --> name of the secondary directory
+                       ==> working directories @@=2dirs
+                $F --> name of the current file
+                $S --> name(s) of the selected file(s)
+                       ($f is preferred)
+                $f --> like $S when <esc> was pressed before
+                       the last keystroke and there are some
+                       selected files; like $F otherwise
+                $$ --> single $ character
+                $c --> this parameter only sets the cursor
+                       position - no text is inserted, e.g:
+                         find / -type f -name '$c' -print
+                       Normal cursor position (without $c)
+                       is at the end of inserted command
+
+              All inserted file and directory names are
+              quoted properly.
+              ==> automatic quoting @@=quoting
+
+WARN_RM       Warns before executing 'rm' (delete) command.
+              Note that CLEX does not detect all occurrences
+              of 'rm' command in the command line, it only
+              checks the first word.
+
+WARN_LONG     Warns if the command line is too long and you
+              could not see the whole command on the screen
+              before executing it. This warning is
+              suppressed in the history panel.
+
+WARN_SELECT   Reminds that you have selected some file(s).
+              This warning should prevent mistakes when the
+              current file is processed instead of selected
+              file(s).
+
+      All three warnings above are normally enabled. You
+      might want to disable warnings that annoy you.
+############################################################
+@P=config_other @@=list of configurable parameters (3)
+
+Warning: do not change parameters you do not understand.
+If you are unsure, test the new value before saving the
+configuration. If any problems occur, reset the parameter
+to standard value.
+
+DIR2          Initial working directory for the secondary
+              file panel. Standard value is your home
+              directory, leave DIR2 set to HOME to use the
+              home directory. DIR2 should be an absolute
+              directory name starting with /.
+
+HELPFILE      The on-line help is compiled into CLEX, but
+              you can replace it with an optional external
+              help file. Most users enter NONE here and
+              use the built-in help; only if you have a
+              help file, enter its name here.
+
+QUOTE         Some characters have a special meaning for
+              the shell. If these special characters appear
+              in a filename being inserted to the command
+              line, they must be taken literally, without
+              the special meaning. This is achieved by
+              quoting them with a preceding backslash.
+
+              These characters are always quoted:
+                  ( ) < > [ ] { } # $ & \ | ? *
+                  ; ' " ` ~ space tab
+
+              Another two characters are added to the
+              list if your shell is a C-shell:
+                  ! :
+
+              The QUOTE parameter allows you to specify
+              a list of additional characters that need
+              to be quoted.
+
+C_PANEL_SIZE  Size of the filename completion panel, i.e.
+              its maximum number of lines. The special
+              value AUTO limits the panel size to the
+              actual screen size (no scrolling).
+
+D_PANEL_SIZE  Size of the directory panel. The value AUTO
+              limits the panel size to the actual screen
+              size.
+
+H_PANEL_SIZE  Size of the command history panel.
+
+--------------------
+Notes:
+ - if you would like to translate the on-line help into
+   your language and wish to obtain more information about
+   the help file format, don't hesitate to contact us
+   ==> contacts @@=about
+ - screen size AUTO for X_PANEL_SIZE parameters leaves
+   the bottom panel line blank to indicate that there is
+   no need to scroll
+ - changing H_PANEL_SIZE clears the contents of the
+   command history list
+ - your shell is considered to be a C-shell when its name
+   ends with 'csh'
+############################################################
+@P=layout @@=configuring file panel layout
+
+The file panel layout can be configured to match
+individual customs and needs. The LAYOUT parameter
+is a string of the form:
+    <file_panel_fields>|<info_line_fields>
+where <fields> is a list of fields to be displayed,
+each field is represented by a dollar sign followed
+by a single character:
+    $a - time/date of last access
+    $d - time/date of last modification
+    $i - time/date of last inode change
+    $l - number of hard links
+    $L - 'LNK' mark is displayed if there are multiple hard
+         links, otherwise this field is blank
+    $m - file mode as an octal number
+    $M - like $m, but blank for normal file modes (i.e.
+         mode 0666 or 0777 with umask value bits cleared)
+    $o - owner - user:group
+    $p - file mode as a string of permission bits
+    $P - like $p, but blank for normal file modes
+    $s - file size
+    $S - like $s, but blank for directories
+    $t - type of file
+    $> - '->' is displayed for symbolic links
+    $* - selection mark
+    $$ - literal dollar sign '$'
+    $| - literal vertical bar '|'
+
+Normal text can be inserted into the list of fields as well,
+e.g.:
+   links:$l mode:$m
+   $m($p)
+
+There are three predefined layouts in the standard
+configuration. LAYOUT1 is detailed, LAYOUT2 is brief,
+and the LAYOUT3 is similar to the 'ls -l' output:
+    LAYOUT1  $d $S $>$t $M $*|  $p $o $L
+    LAYOUT2  $d $S $t $*|  $p $o
+    LAYOUT3
+    $p $o $s $d $>$t $*|  mode=$m atime=$a ctime=$i links=$l
+
+All three LAYOUTs can be altered and one of them is
+selected with the ACTIVE_LAYOUT configuration parameter
+to act as the file panel layout.
+
+The filename is always displayed after all defined file
+panel fields.
+
+--------------------
+Notes:
+  - numbers and dates are automatically aligned to the
+    proper field margin, e.g.:
+      $d $s             - aligned to the right
+      mtime=$d size=$s  - aligned to the left
+  - time of the day instead of date is displayed for times
+    within the last 18 hours
+  - you can omit the selection mark $* if you accept the
+    highlighting as a sufficient indicator
+  - $L field is left blank also for all directories as they
+    always have multiple hard links
+############################################################
+@P=xterm @@=changing xterm title
+
+When XTERM_TITLE is set to AUTO, the title change feature
+gets enabled only if $TERM is xterm, kterm, or dtterm,
+possibly including additional characters, e.g. xterm-mono.
+
+Following command is run to get the current window title:
+  xprop -id $WINDOWID WM_NAME
+You can try it from the command line. If that command fails,
+CLEX is not able to restore the original X window title at
+exit and uses a general title 'terminal'.
+############################################################
+@P=security @@=security note
+
+Protect your configuration files! They contain templates
+for the commands you execute. Do not allow others to
+modify them:
+- only the system administrator(s) should have the write
+  access to the system-wide configuration file, everybody
+  else should have just the permission to read
+- only the owner should have the write access to his/her
+  personal configuration file
+
+To reduce the risk, CLEX ignores world-writable
+configuration files.
+############################################################
+@P=admin @@=admin mode (for system administrators only)
+
+The configuration process at the program startup has
+three steps:
+  1) parameters are initialized to values
+     compiled into CLEX
+  2) system-wide configuration file is processed
+  3) user's personal configuration file is processed
+
+In the admin mode the system administrator can alter the
+system-wide configuration. To enter the admin mode start
+the program with -a (or --admin) option:
+  clex -a
+The configuration panel with the system-wide defaults
+for all parameters appears on the screen. Modify them
+as necessary and then save the configuration.
+
+You will need the permission to create/modify the
+system-wide configuration file.
+==> protecting configuration files @@=security
+
+WARNING: System-wide defaults affect all CLEX users.
+
+It is recommended to check at least:
+  CMD_F3 - you might prefer 'less' instead of 'more'
+  CMD_F8 - you might prefer 'rm -i' (and disable WARN_RM)
+  CMD_F9 - check the command for printing
+If your file utilities understand the end-of-options sign
+'--', you could use it in your CMD_FX command templates.
+############################################################
+@P=select @@=alt-+ and alt--  - selecting and deselecting files
+
+To specify files to be (de)selected, enter at the
+appropriate prompt a filename pattern. Follow the usual
+conventions for specifying filenames used in the shell.
+
+Wildcards:  ?  *  [list]  [!list] or [^list]
+Quoting:    \c  'string'  "string"
+==> pattern matching details @@=patterns
+
+The current directory . (dot) and the parent directory
+.. (dot-dot) cannot be selected. This is a protective
+measure.
+############################################################
+@P=patterns @@=pattern matching
+
+Patterns are used to specify filenames. This concept is used
+in the command line shells like sh, bash, csh; see the
+appropriate documentation if you want to learn more.
+
+CLEX recognizes following special symbols:
+
+Wildcards:
+    ?          matches any single character
+    *          matches any string (zero or more characters)
+    [list]     matches one of the characters appearing in
+               the list, ranges like 0-9 a-z are allowed
+    [!list]    matches one of the characters NOT appearing
+ or [^list]    in the list
+
+Exception: wildcards don't match a dot on the first position
+of a filename (to conceal so called hidden filenames).
+
+Quoting:
+    \c         a character preceded by a backslash loses
+               its special meaning
+   'string'    everything enclosed in single quotes is
+               taken literally, even the backslash
+   "string"    backslash quotes the characters \, $, and ",
+               everything else in double quotes is taken
+               literally
+
+--------------------
+Notes:
+ - unlike the shell, escape sequences are not recognized,
+   e.g. \t does not stand for the tab character.
+ - handling of character ranges is affected by the locale
+   setting.
+############################################################
+@P=about @@=about CLEX
+
+CLEX (pronounced KLEKS) is free software without warranty
+of any kind. See the GNU General Public License for details.
+==> Software license @@=license
+
+The newest version of CLEX, related materials, etc. can be
+found on the CLEX web page. The URL is: http://www.clex.sk
+
+Please send your questions, comments, or bug reports to the
+e-mail address: clex@clex.sk
+
+Many thanks to all the people who have taken the time to
+submit suggestions for enhancements or problem reports.
+
+CLEX File Manager
+Copyright (C) 2001-2006 Vlado Potisk <vlado_potisk@clex.sk>
+############################################################
+@P=license @@=Software license agreement
+
+Authors have developed the CLEX File Manager and made it
+available by means of electronic distribution at the
+Internet web page http://www.clex.sk.
+
+This program is free software; you can redistribute it
+and/or modify it under the terms of the GNU General Public
+License as published by the Free Software Foundation;
+either version 2 of the License, or (at your option) any
+later version.
+
+This program is distributed in the hope that it will be
+useful, but WITHOUT ANY WARRANTY; without even the implied
+warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE. See the GNU General Public License for more
+details.
+
+You should have received a copy of the GNU General Public
+License along with this program; if not, write to the Free
+Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA 02110, USA 
+############################################################
+@P=notes @@=Miscellaneous notes
+
+GENERAL USAGE
+  - CLEX does not support UTF-8 character encoding
+
+  - special attention should be paid when dealing with
+    filenames beginning with a hyphen. For example the
+    correct way to delete a file named '-i' is:
+      rm ./-i
+    or (on some systems)
+      rm -- -i
+    You can redefine commands F3 - F9 to include this
+    end-of-options sign --
+
+  - if the screen appears distorted and redraw (ctrl-L)
+    does not solve the problem, run this command:
+      tput reset
+
+  - there is no way to change CLEX's environment variables,
+    you must set them before starting CLEX
+
+X WINDOW SYSTEM
+  - if you cannot see the output of executed commands on
+    some X terminal emulators try to disable scrolling
+
+  - to see highlighted text in color on your xterm, put
+    these lines to your .Xresources file:
+      XTerm*colorBD: blue3        <-- pick your own color
+      XTerm*colorBDMode: true
+    don't forget to run
+      xrdb -merge .Xresources
+    after a change
+
+ -  there were problems with the HOME and END keys in the
+    original Fedora Core 4 xterm, but an updated xterm
+    package was released
+
+ -  in some older versions of KDE you have to run xrdb
+    every time you want to start xterm. Upgrade to more
+    recent version or use this simple CLEX startup script
+    as a workaround:
+
+    #!/bin/sh
+    XRES=$HOME/.Xresources
+    [ -f $XRES ] && /usr/X11R6/bin/xrdb -merge $XRES
+    exec /usr/X11R6/bin/xterm \
+      -geometry 80x32 -e /usr/bin/clex
+
+ -  if the input line gets cluttered after using the
+    backspace key in KDE terminal emulator konsole,
+    you have to upgrade to more recent KDE version

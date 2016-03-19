@@ -1,0 +1,12 @@
+extern void userdata_initialize(void);
+extern void userdata_expire(void);
+extern int userdata_refresh(void);
+extern const char *lookup_login(uid_t);
+extern const char *lookup_group(gid_t);
+extern void username_find_init(const char *, size_t);
+extern const char *username_find(const char **);
+extern const char *dir_tilde(const char *);
+extern void user_prepare(void);
+extern void user_panel(void);
+extern void group_prepare(void);
+extern void group_panel(void);
