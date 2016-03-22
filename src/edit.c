@@ -3,6 +3,7 @@
  * CLEX File Manager
  *
  * Copyright (C) 2001-2006 Vlado Potisk <vlado_potisk@clex.sk>
+ * Copyright (C) 2016 Zoran Loncarevic <zoran233@gmail.com>
  *
  * CLEX is free software without warranty of any kind; see the
  * GNU General Public License as set out in the "COPYING" document
@@ -21,6 +22,7 @@
 #include "edit.h"
 
 #include "cfg.h"			/* config_str() */
+#include "filepanel.h"		/* cx_files_enter() */
 #include "inout.h"			/* win_edit() */
 #include "history.h"		/* hist_reset_index() */
 #include "sdstring.h"		/* SDSTR() */
@@ -125,6 +127,7 @@ cx_edit_end(void)
 void
 cx_edit_left(void)
 {
+	if (!textline->size) cx_files_cd_parent();
 	if (textline->curs > 0) {
 		textline->curs--;
 		edit_update_cursor();
@@ -134,6 +137,7 @@ cx_edit_left(void)
 void
 cx_edit_right(void)
 {
+	if (!textline->size) cx_files_enter();
 	if (textline->curs < textline->size) {
 		textline->curs++;
 		edit_update_cursor();

@@ -3,6 +3,7 @@
  * CLEX File Manager
  *
  * Copyright (C) 2001-2006 Vlado Potisk <vlado_potisk@clex.sk>
+ * Copyright (C) 2016 Zoran Loncarevic <zoran233@gmail.com>
  *
  * CLEX is free software without warranty of any kind; see the
  * GNU General Public License as set out in the "COPYING" document
@@ -27,6 +28,7 @@
 #include "sort.h"			/* sort_files() */
 #include "util.h"			/* substring() */
 #include "userdata.h"		/* user_panel() */
+#include "filepanel.h"		/* cx_files_enter() */
 
 void
 cx_filteredit_begin(void)
@@ -52,6 +54,7 @@ cx_filteredit_right(void)
 {
 	if (panel->filter->curs < panel->filter->size)
 		panel->filter->curs++;
+	else if (panel->type == PANEL_TYPE_FILE) cx_files_enter();
 }
 
 void
