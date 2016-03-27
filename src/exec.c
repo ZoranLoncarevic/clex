@@ -173,7 +173,7 @@ exec_prompt_reconfig(void)
 }
 
 static int
-execute(const char *command)
+execute(const char *command, FLAG prompt_user)
 {
 	pid_t childpid;
 	FLAG failed;
@@ -292,7 +292,7 @@ execute(const char *command)
 	list_directory();
 	ppanel_file->other->expired = 1;
 
-	tty_press_enter();
+	if (prompt_user || failed) tty_press_enter();
 	xterm_title_set(0,0);
 
 	return failed;
@@ -442,7 +442,7 @@ check_cd(const char *str)
  * (successfully or not), otherwise 0
  */
 int
-execute_cmd(const char *cmd)
+execute_cmd(const char *cmd, FLAG prompt_user)
 {
 	static FLAG hint = 1;
 	int do_exec, warn_level;
@@ -459,16 +459,18 @@ execute_cmd(const char *cmd)
 		return 1;
 	}
 
-	curses_stop();
-	putchar('\n');
-	puts(cmd);
-	putchar('\n');
-	fflush(stdout);
+	if (prompt_user) {
+		curses_stop();
+		putchar('\n');
+		puts(cmd);
+		putchar('\n');
+		fflush(stdout);
+	}
 
 	warn_level = print_warnings(cmd);
 	do_exec = warn_level == 0 || user_confirm();
 	if (do_exec)
-		hist_save(cmd,execute(cmd) != 0);
+		hist_save(cmd,execute(cmd,prompt_user) != 0);
 
 	curses_restart();
 	if (warn_level >= 2 && TCLR(hint))

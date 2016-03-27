@@ -290,7 +290,7 @@ cx_files_enter(void)
 	FILE_ENTRY *pfe;
 
 	if (textline->size) {
-		if (execute_cmd(USTR(textline->line))) {
+		if (execute_cmd(USTR(textline->line),PROMPT_USER)) {
 			cx_edit_kill();
 			undo_reset();
 		}
