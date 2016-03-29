@@ -133,7 +133,8 @@ static CSTR table_string[] = {
 	  "$p $o $s $d $>$t $*|  mode=$m atime=$a ctime=$i links=$l", "", "" },
 	{ CFG_PROMPT,		"AUTO",	"",				"", "" },
 	{ CFG_QUOTE,		0,		"",				"", "" },
-	{ CFG_SHELLPROG,	"AUTO",	"",				"", "" }
+	{ CFG_SHELLPROG,	"AUTO",	"",				"", "" },
+	{ CFG_VIEWER_CMD,		0,		"less $f",		"", "" }
 };
 
 /*
@@ -184,6 +185,7 @@ static struct {
 						"see help" },
 	{ CFG_SHELLPROG,	"Shell program, see help "
 						"(AUTO = your login shell)" },
+	{ CFG_VIEWER_CMD,	"File viewer command" },
 	{ CFG_WARN_RM,		"Warn before executing 'rm' (remove) command" },
 	{ CFG_WARN_LONG,	"Warn that the command line is too long to be "
 						"displayed" },
@@ -227,7 +229,8 @@ static CONFIG_ENTRY config[CFG_VARIABLES] = {
 	{ "QUOTE",			0,0,0,0,0 },
 	{ "C_PANEL_SIZE",	0,0,0,0,0 },
 	{ "D_PANEL_SIZE",	0,0,0,0,0 },
-	{ "H_PANEL_SIZE",	0,0,0,0,0 }
+	{ "H_PANEL_SIZE",	0,0,0,0,0 },
+	{ "VIEWER_CMD",		0,0,0,0,0 }
 };	/* must exactly match CFG_XXX #defines */
 
 /* 'move' values MOV_X2Y understood by set_value() */

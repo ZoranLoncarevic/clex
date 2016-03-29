@@ -353,7 +353,7 @@ typedef struct {
  * if you change this, you must also update
  * the config[] array in cfg.c
  */
-#define CFG_VARIABLES		34
+#define CFG_VARIABLES		35
 
 /* appearance */
 #define CFG_FRAME			 0
@@ -392,6 +392,8 @@ typedef struct {
 #define CFG_C_SIZE			31
 #define CFG_D_SIZE			32
 #define CFG_H_SIZE			33
+/* additional configuration */
+#define CFG_VIEWER_CMD			34
 
 /* max string lengths */
 #define CFGVAR_LEN		16	/* name */

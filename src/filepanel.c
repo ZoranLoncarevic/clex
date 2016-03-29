@@ -283,6 +283,15 @@ cx_files_exchange(void)
 	next_mode = MODE_FILE;
 }
 
+/* pressed <ENTER> on ordinary file: launch file viewer */
+void
+cx_launch_file_viewer(void)
+{
+	edit_macro(config_str(CFG_VIEWER_CMD));
+	if (execute_cmd(USTR(textline->line),DONOT_PROMPT_USER))
+		{ cx_edit_kill(); undo_reset(); }
+}
+
 /* pressed <ENTER> - several functions: exec, chdir and insert */
 void
 cx_files_enter(void)
@@ -306,6 +315,7 @@ cx_files_enter(void)
 		}
 		else if (IS_FT_EXEC(pfe->file_type))
 			edit_macro("./$F ");
+		     else cx_launch_file_viewer();
 	}
 }
 
