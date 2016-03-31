@@ -68,6 +68,26 @@ exec_initialize(void)
 }
 
 static int
+split_str(char *str, char *substr[], char delimiter, int max)
+{
+	int i;
+	FLAG arg_end;
+
+	/* split to arguments */
+	for (arg_end = 1, i = 0; *str; str++ )
+		if (*str == delimiter) {
+			*str = '\0';
+			arg_end = 1;
+		}
+		else if (TCLR(arg_end)) {
+			if (i >= max) return -1;  /* Error: too many substr*/
+			substr[i++] = str;
+		}
+	substr[i] = 0;
+	return i;
+}
+
+static int
 shelltype(const char *shell)
 {
 	size_t len;
@@ -82,29 +102,18 @@ shelltype(const char *shell)
 static int
 parse_shellprog(const char *shellprog)
 {
-	char *pch;
 	int i, ac;
-	FLAG arg_end;
 	static USTRING dup = { 0,0 };
 
 	us_copy(&dup,shellprog);
+	ac = split_str(USTR(dup),shell_argv,' ',MAX_SHELL_ARGS);
 
-	/* split to arguments */
-	for (arg_end = 1, i = 0, pch = USTR(dup); *pch; pch++ )
-		if (*pch == ' ') {
-			*pch = '\0';
-			arg_end = 1;
-		}
-		else if (TCLR(arg_end)) {
-			if (i >= MAX_SHELL_ARGS) {
-				txt_printf(
-				  "CONFIG: Incorrect SHELLPROG: too many arguments\n"
-				  "        limit is " STR(MAX_SHELL_ARGS) "\n");
-				return -1;
-			}
-			shell_argv[i++] = pch;
-		}
-	shell_argv[ac = i] = 0;
+	if (ac == -1) {
+		txt_printf(
+		  "CONFIG: Incorrect SHELLPROG: too many arguments\n"
+		  "        limit is " STR(MAX_SHELL_ARGS) "\n");
+		return -1;
+	}
 
 	for (cmd_index = 0, i = 1; i < ac; i++)
 		if (strcmp(shell_argv[i],"<COMMAND>") == 0) {
