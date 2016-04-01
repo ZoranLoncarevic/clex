@@ -134,7 +134,8 @@ static CSTR table_string[] = {
 	{ CFG_PROMPT,		"AUTO",	"",				"", "" },
 	{ CFG_QUOTE,		0,		"",				"", "" },
 	{ CFG_SHELLPROG,	"AUTO",	"",				"", "" },
-	{ CFG_VIEWER_CMD,		0,		"less $f",		"", "" }
+	{ CFG_VIEWER_CMD,		0,		"less $f",		"", "" },
+	{ CFG_NOPROMPT_CMDS,		0,		"less man vi vim",		"", "" }
 };
 
 /*
@@ -179,6 +180,7 @@ static struct {
 	{ CFG_LAYOUT1,		"Appearance: File panel layout #1, see help" },
 	{ CFG_LAYOUT2,		"Appearance: File panel layout #2" },
 	{ CFG_LAYOUT3,		"Appearance: File panel layout #3" },
+	{ CFG_NOPROMPT_CMDS,	"List of interactive commands, see help" },
 	{ CFG_PROMPT,		"Appearance: "
 		"Command line prompt (AUTO = according to shell)" },
 	{ CFG_QUOTE,		"Additional filename chars to be quoted, "
@@ -230,7 +232,8 @@ static CONFIG_ENTRY config[CFG_VARIABLES] = {
 	{ "C_PANEL_SIZE",	0,0,0,0,0 },
 	{ "D_PANEL_SIZE",	0,0,0,0,0 },
 	{ "H_PANEL_SIZE",	0,0,0,0,0 },
-	{ "VIEWER_CMD",		0,0,0,0,0 }
+	{ "VIEWER_CMD",		0,0,0,0,0 },
+	{ "NOPROMPT_CMDS",	0,0,0,0,0 }
 };	/* must exactly match CFG_XXX #defines */
 
 /* 'move' values MOV_X2Y understood by set_value() */
@@ -765,6 +768,8 @@ config_apply(void)
 		dir_reconfig();
 	if (config[CFG_H_SIZE].changed)
 		hist_reconfig();
+	if (config[CFG_NOPROMPT_CMDS].changed)
+		exec_nplist_reconfig();
 
 	if (prompt)
 		exec_prompt_reconfig();

@@ -56,6 +56,8 @@ extern int errno;
 static char *shell_argv[MAX_SHELL_ARGS + 2 + 1];
 static int cmd_index;		/* which parameter is the command
 							   to be executed */
+#define MAX_NPL_CMDS 128
+static char *nplist[MAX_NPL_CMDS+1];
 
 void
 exec_initialize(void)
@@ -65,6 +67,7 @@ exec_initialize(void)
 
 	exec_shell_reconfig();
 	exec_prompt_reconfig();	/* prompt needs to know the shell */
+	exec_nplist_reconfig();
 }
 
 static int
@@ -179,6 +182,15 @@ exec_prompt_reconfig(void)
 	us_cat(&cmd_prompt,clex_data.isroot ? "ROOT " : "",
 	  prompt,prompt_char,(char *)0);
 	edit_setprompt(&line_cmd,USTR(cmd_prompt));
+}
+
+void
+exec_nplist_reconfig(void)
+{
+	static USTRING dup = { 0,0 };
+
+	us_copy(&dup,config_str(CFG_NOPROMPT_CMDS));
+	split_str(USTR(dup),nplist,' ',MAX_NPL_CMDS);
 }
 
 static int
@@ -454,8 +466,8 @@ int
 execute_cmd(const char *cmd, FLAG prompt_user)
 {
 	static FLAG hint = 1;
-	int do_exec, warn_level;
-	const char *dir;
+	int do_exec, warn_level, i;
+	const char *dir, *s1, *s2;
 
 	/* intercept single 'cd' command */
 	if ( (dir = check_cd(cmd)) ) {
@@ -466,6 +478,17 @@ execute_cmd(const char *cmd, FLAG prompt_user)
 		win_panel();
 		win_remark("directory changed");
 		return 1;
+	}
+
+	/* is cmd in the list of interactive commands?  */
+	if (prompt_user) {
+		for(i=0; nplist[i]; i++)
+		{
+			s1 = nplist[i]; s2 = cmd;
+			while(*s1 && *s2 && *s1++==*s2++) ;
+			if (*s1=='\0' && (*s2==' ' || *s2=='\0'))
+			{ prompt_user = 0; break; }
+		}
 	}
 
 	if (prompt_user) {
