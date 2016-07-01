@@ -211,6 +211,16 @@ curses_stop(void)
 	display.curses = 0;
 }
 
+/* stop CURSES */
+/* this is a version that also issues smcup */
+void
+curses_stop_with_smcup(void)
+{
+	curses_stop();
+	fputs(tgetstr("ti",NULL),stdout);
+	fflush(stdout);
+}
+
 /* set cursor to the proper position and refresh screen */
 static void
 screen_refresh(void)

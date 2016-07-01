@@ -487,7 +487,7 @@ execute_cmd(const char *cmd, FLAG prompt_user)
 			s1 = nplist[i]; s2 = cmd;
 			while(*s1 && *s2 && *s1++==*s2++) ;
 			if (*s1=='\0' && (*s2==' ' || *s2=='\0'))
-			{ prompt_user = 0; break; }
+			{ prompt_user = 0; curses_stop_with_smcup(); break; }
 		}
 	}
 

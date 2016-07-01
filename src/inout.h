@@ -1,5 +1,6 @@
 extern void curses_initialize(void);
 extern void curses_stop(void);
+extern void curses_stop_with_smcup(void);
 extern void curses_restart(void);
 extern void txt_printf(const char *, ...);
 
