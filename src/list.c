@@ -616,6 +616,23 @@ describe_file(const char *name, FILE_ENTRY *pfe)
 	return 0;
 }
 
+#define DOT_NONE                0       /* not a .file */
+#define DOT_DIR                 1       /* dot directory */
+#define DOT_DOT_DIR             2       /* dot-dot directory */
+#define DOT_HIDDEN              3       /* hidden .file */
+
+static int
+dotfile(const char *name)
+{
+        if (name[0] != '.')
+                return DOT_NONE;
+        if (name[1] == '\0')
+                return DOT_DIR;
+        if (name[1] == '.' && name[2] == '\0')
+                return DOT_DOT_DIR;
+        return DOT_HIDDEN;
+}
+
 /*
  * We abandoned any form of caching and always build the file
  * panel from scratch. No caching algorithm was 100% perfect,
@@ -669,13 +686,7 @@ directory_read(void)
 	cnt2 = cnt1;
 	while ( (direntry = readdir(dd)) ) {
 		name = direntry->d_name;
-		dotdir = 0;
-		if (name[0] == '.') {
-			if (name[1] == '\0')
-				dotdir = 1;
-			else if (name[1] == '.' && name[2] == '\0')
-				dotdir = 2;
-		}
+		dotdir = dotfile(name);
 
 		/* didn't we see this file already in step #1 ? */
 		if (cnt1) {
@@ -702,7 +713,7 @@ directory_read(void)
 
 		pfe = ppanel_file->files[cnt2];
 		sd_copy(&pfe->file,name);
-		pfe->dotdir = dotdir;
+		pfe->dotdir = (dotdir == DOT_HIDDEN) ? DOT_NONE : dotdir;
 		if (describe_file(use_pathname ? pathname_join(name) : name,
 		  pfe) < 0)
 			continue;
