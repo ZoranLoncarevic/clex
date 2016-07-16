@@ -645,6 +645,7 @@ directory_read(void)
 	CODE dotdir;
 	DIR *dd;
 	FILE_ENTRY *pfe;
+	FLAG hide;
 	struct stat st;
 	struct dirent *direntry;
 	const char *name;
@@ -657,6 +658,9 @@ directory_read(void)
 		return;
 	}
 	dirdev = st.st_dev;
+	hide = config_num(CFG_SHOW_HIDDEN) == HIDE_ALWAYS
+		|| (config_num(CFG_SHOW_HIDDEN) == HIDE_HOME
+		    && strcmp(USTR(ppanel_file->dir),clex_data.homedir) == 0);
 
 	/*
 	 * step #1: process selected files already listed in the panel
@@ -669,7 +673,7 @@ directory_read(void)
 			continue;
 		name = SDSTR(pfe->file);
 		if (describe_file(use_pathname ? pathname_join(name) : name,
-		  pfe) < 0)
+		  pfe) < 0 || (hide && dotfile(name) == DOT_HIDDEN))
 			/* this entry is no more valid */
 			ppanel_file->selected--;
 		else {
@@ -715,7 +719,7 @@ directory_read(void)
 		sd_copy(&pfe->file,name);
 		pfe->dotdir = (dotdir == DOT_HIDDEN) ? DOT_NONE : dotdir;
 		if (describe_file(use_pathname ? pathname_join(name) : name,
-		  pfe) < 0)
+		  pfe) < 0 || (hide && dotfile(name) == DOT_HIDDEN))
 			continue;
 		pfe->select = 0;
 		cnt2++;

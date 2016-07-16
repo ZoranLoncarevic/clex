@@ -332,6 +332,10 @@ typedef struct {
 	CODE order;				/* file sort order: one of SORT_XXX */
 } PANEL_SORT;
 
+#define HIDE_NEVER	0
+#define HIDE_HOME	1
+#define HIDE_ALWAYS	2
+
 /********************************************************************/
 
 typedef struct {
@@ -353,7 +357,7 @@ typedef struct {
  * if you change this, you must also update
  * the config[] array in cfg.c
  */
-#define CFG_VARIABLES		36
+#define CFG_VARIABLES		37
 
 /* appearance */
 #define CFG_FRAME			 0
@@ -395,6 +399,7 @@ typedef struct {
 /* additional configuration */
 #define CFG_VIEWER_CMD			34
 #define CFG_NOPROMPT_CMDS		35
+#define CFG_SHOW_HIDDEN			36
 
 /* max string lengths */
 #define CFGVAR_LEN		16	/* name */

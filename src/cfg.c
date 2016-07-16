@@ -102,7 +102,11 @@ static CNUM table_numeric[] = {
 	/* really numeric */
 	{ CFG_C_SIZE,		"AUTO",	10, 100,  0, 0, 0, { 0 } },
 	{ CFG_D_SIZE,		"AUTO",	10, 100,  0, 0, 0, { 0 } },
-	{ CFG_H_SIZE,		0,		10, 100, 40, 0, 0, { 0 } }
+	{ CFG_H_SIZE,		0,		10, 100, 40, 0, 0, { 0 } },
+	{ CFG_SHOW_HIDDEN,	0, 0, 2, 0, 0, 0,
+		{	"Show hidden .files",
+			"Show hidden .files, except in home directory",
+			"Do not show hidden .files" } }
 };
 
 typedef struct {
@@ -174,6 +178,7 @@ static struct {
 	{ CFG_H_SIZE,		"History panel size" },
 	{ CFG_HELPFILE,		"External helpfile "
 						"(NONE = use built-in help instead)" },
+	{ CFG_SHOW_HIDDEN,	"Appearance: Weather to show hidden .files" },
 	{ CFG_KILOBYTE,		"Appearance: Filesize unit definition" },
 	{ CFG_LAYOUT,		"Appearance: "
 		"Which file panel layout is active" },
@@ -233,7 +238,8 @@ static CONFIG_ENTRY config[CFG_VARIABLES] = {
 	{ "D_PANEL_SIZE",	0,0,0,0,0 },
 	{ "H_PANEL_SIZE",	0,0,0,0,0 },
 	{ "VIEWER_CMD",		0,0,0,0,0 },
-	{ "NOPROMPT_CMDS",	0,0,0,0,0 }
+	{ "NOPROMPT_CMDS",	0,0,0,0,0 },
+	{ "SHOW_HIDDEN",	0,0,0,0,0 }
 };	/* must exactly match CFG_XXX #defines */
 
 /* 'move' values MOV_X2Y understood by set_value() */
@@ -755,6 +761,8 @@ config_apply(void)
 	  || config[CFG_FMT_TIME].changed
 	  || config[CFG_FMT_DATE].changed
 	  || config[CFG_KILOBYTE].changed)
+		reread = 1;
+	if (config[CFG_SHOW_HIDDEN].changed)
 		reread = 1;
 	if (config[CFG_SHELLPROG].changed) {
 		exec_shell_reconfig();
