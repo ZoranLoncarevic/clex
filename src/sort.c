@@ -45,13 +45,19 @@ sort_prepare(void)
 void
 cx_sort_set(void)
 {
-	if (panel_sort.order != panel_sort.pd->curs) {
-		panel_sort.order = panel_sort.pd->curs;
-		filepos_save();
-		sort_files();
-		filepos_set();
-		ppanel_file->other->expired = 1;
+	int cursor = panel_sort.pd->curs;
+
+	if (cursor < 7) {
+		if (panel_sort.order != cursor) {
+			panel_sort.order = panel_sort.pd->curs;
+			filepos_save();
+			sort_files();
+			filepos_set();
+			ppanel_file->other->expired = 1;
+		}
 	}
+	else if (cursor > 7) config_set_num(CFG_SHOW_HIDDEN,cursor-8);
+
 	next_mode = MODE_SPECIAL_RETURN;
 }
 

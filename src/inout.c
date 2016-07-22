@@ -1308,13 +1308,27 @@ draw_line_sort(int ln)
 		"size [large -> small]",
 		"time of last modification [recent -> old]",
 		"time of last modification [old -> recent]",
-		"reversed name (use in sendmail queue directory)"
+		"reversed name (use in sendmail queue directory)",
 		/* must correspond with SORT_XXX */
+		"show hidden .files",
+		"show hidden .files, except in home directory",
+		"do not show hidden files"
 	};
 
-	addstr(panel_sort.order == ln ? "(x" : "( ");	/* 2 */
-	addstr(") sort by ");							/* 10 */
-	putstr_trunc(description[ln],display.pancols - 12,0);
+	if (ln == 7) {
+		putstr_trunc("",display.pancols,0);
+		return;
+	}
+	if (ln > 6)
+	{
+		addstr(config_num(CFG_SHOW_HIDDEN) == ln-8 ? "(x) " : "( ) ");
+		putstr_trunc(description[ln-1],display.pancols-4,0);
+	} else
+	{
+		addstr(panel_sort.order == ln ? "(x" : "( ");	/* 2 */
+		addstr(") sort by ");				/* 10 */
+		putstr_trunc(description[ln],display.pancols - 12,0);
+	}
 }
 
 static void

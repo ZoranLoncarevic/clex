@@ -125,8 +125,8 @@ static PANEL_DESC pd_paste =
   /* 13 items in this menu */
   { 13,-1,-1,-1,PANEL_TYPE_PASTE,0,el_leave,0,0 };
 static PANEL_DESC pd_sort =
-  /* 7 items in this menu */ 
-  {  7,0,0,-1,PANEL_TYPE_SORT,0,el_leave,0,0 };
+  /* 11 items in this menu */
+  {  11,0,0,-1,PANEL_TYPE_SORT,0,el_leave,0,0 };
 static PANEL_DESC pd_usr =
   { 0,0,0,-2,PANEL_TYPE_USER,0,el_usr,&il_filt,0 };
 PANEL_DESC *panel = 0;
