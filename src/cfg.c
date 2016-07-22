@@ -844,3 +844,25 @@ cx_config_enter(void)
 		control_loop(MODE_CFG_EDIT_TXT);
 	win_panel_opt();
 }
+
+void
+config_set_num(int code, int new_value)
+{
+	CNUM *pnum = config[code].table;
+
+	pnum->new = new_value;
+	config[code].changed = pnum->new != pnum->current;
+	config[code].saveit = pnum->new != pnum->initial;
+	config_apply();
+}
+
+void
+config_set_str(int code, char *new_value)
+{
+	CSTR *pstr = config[code].table;
+
+	strcpy(pstr->new,new_value);
+	config[code].changed = strcmp(pstr->new,pstr->current) != 0;
+	config[code].saveit = strcmp(pstr->new,pstr->initial) != 0;
+	config_apply();
+}

@@ -10,6 +10,8 @@ extern void cx_config_default(void);
 extern void cx_config_original(void);
 extern void cx_config_save(void);
 extern void cx_config_admin_save(void);
+extern void config_set_num(int code, int new_value);
+extern void config_set_str(int code, char *new_value);
 
 #define config_num(X) (*(const int *)pcfg[X])
 #define config_str(X) ((const char *)pcfg[X])
