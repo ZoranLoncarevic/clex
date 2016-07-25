@@ -32,6 +32,7 @@
 #include "cfg.h"		/* config_num() */
 #include "directory.h"	/* filepos_save() */
 #include "sdstring.h"	/* SDSTR() */
+#include "inout.h"
 
 void
 sort_prepare(void)
@@ -59,6 +60,14 @@ cx_sort_set(void)
 	else if (cursor > 7) config_set_num(CFG_SHOW_HIDDEN,cursor-8);
 
 	next_mode = MODE_SPECIAL_RETURN;
+}
+
+void
+cx_sort_cycle_H(void)
+{
+	if (panel->curs < 8) panel->curs = 8;
+	else panel->curs = 8 + (panel->curs-7) % 3;
+	win_panel_opt();
 }
 
 /* compare reversed strings */

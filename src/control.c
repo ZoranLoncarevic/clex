@@ -417,6 +417,7 @@ static KEY_BINDING tab_select[] = {
 
 static KEY_BINDING tab_sort[] = {
 	{ 0,  CH_CTRL('M'),	cx_sort_set,	0		},
+	{ 0, 'h',		cx_sort_cycle_H,	0	},
 	{ 0,  0,			0,				0		}
 };
 
