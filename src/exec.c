@@ -53,7 +53,7 @@
 extern int errno;
 
 #define MAX_SHELL_ARGS	8
-static char *shell_argv[MAX_SHELL_ARGS + 2 + 1];
+static char *shell_argv[MAX_SHELL_ARGS + 2 + 1], *shell_iargv[2];
 static int cmd_index;		/* which parameter is the command
 							   to be executed */
 #define MAX_NPL_CMDS 128
@@ -110,6 +110,7 @@ parse_shellprog(const char *shellprog)
 
 	us_copy(&dup,shellprog);
 	ac = split_str(USTR(dup),shell_argv,' ',MAX_SHELL_ARGS);
+	shell_iargv[0] = shell_argv[0]; shell_iargv[1] = 0;
 
 	if (ac == -1) {
 		txt_printf(
@@ -193,7 +194,7 @@ exec_nplist_reconfig(void)
 	split_str(USTR(dup),nplist,' ',MAX_NPL_CMDS);
 }
 
-static int
+int
 execute(const char *command, FLAG prompt_user)
 {
 	pid_t childpid;
@@ -201,9 +202,10 @@ execute(const char *command, FLAG prompt_user)
 	int status, code;
 	struct sigaction act;
 	const char *signame;
+	const char *title = *command ? command : base_name(shell_argv[0]);
 
 	failed = 1;
-	xterm_title_set(1,command);
+	xterm_title_set(1,title);
 	childpid = fork();
 	if (childpid == -1)
 		printf("EXEC: Cannot create new process (%s)\n",
@@ -231,7 +233,7 @@ execute(const char *command, FLAG prompt_user)
 
 		/* execute the command */
 		((const char **)shell_argv)[cmd_index] = command;
-		execv(shell_argv[0],shell_argv);
+		execv(shell_argv[0],*command ? shell_argv : shell_iargv);
 		printf("EXEC: Cannot execute shell %s (%s)\n",
 		  shell_argv[0],strerror(errno));
 		exit(99);
@@ -309,7 +311,7 @@ execute(const char *command, FLAG prompt_user)
 	 * restart much faster. All output routines called from
 	 * list_directory() must check if curses mode is active.
 	 */
-	xterm_title_set(0,command);
+	xterm_title_set(0,title);
 	list_directory();
 	ppanel_file->other->expired = 1;
 
