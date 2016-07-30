@@ -25,6 +25,7 @@
 #include "tty.h"
 
 #include "control.h"	/* err_exit() */
+#include "exec.h"	/* execute() */
 
 extern int errno;
 
@@ -86,7 +87,8 @@ tty_press_enter(void)
 	fputs("Press <enter> to continue. ",stdout);
 	fflush(stdout);
 	tty_setraw();
-	while ((in = getchar()) != '\n' && in != '\r') {
+	while ((in = getchar()) != '\n' && in != '\r'
+					&& in != 't') {
 		if (in != EOF)
 			continue;
 		if (errno == EINTR)
@@ -103,6 +105,14 @@ tty_press_enter(void)
 		err_exit("Cannot read from standard input");
 	}
 	tty_reset();
+
+	/* Run interactive shell on demand. */
+	if (in == 't') {
+		puts("\n");
+		fflush(stdout);
+		execute("",DONOT_PROMPT_USER);
+		tty_reset();
+	}
 
 	puts("\n----------------------------------------------");
 	fflush(stdout);
