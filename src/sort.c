@@ -57,8 +57,9 @@ cx_sort_set(void)
 			ppanel_file->other->expired = 1;
 		}
 	}
-	else if (cursor > 7) config_set_num(CFG_SHOW_HIDDEN,cursor-8);
-
+	else if (cursor > 7 && cursor < 11) config_set_num(CFG_SHOW_HIDDEN,cursor-8);
+	else if (cursor == 12) config_set_num(CFG_SHOW_LINKTRGT,
+	                                      !config_num(CFG_SHOW_LINKTRGT));
 	next_mode = MODE_SPECIAL_RETURN;
 }
 
@@ -68,6 +69,13 @@ cx_sort_cycle_H(void)
 	if (panel->curs < 8) panel->curs = 8;
 	else panel->curs = 8 + (panel->curs-7) % 3;
 	win_panel_opt();
+}
+
+void
+cx_sort_cycle_T(void)
+{
+	config_set_num(CFG_SHOW_LINKTRGT,!config_num(CFG_SHOW_LINKTRGT));
+	next_mode = MODE_SPECIAL_RETURN;
 }
 
 /* compare reversed strings */

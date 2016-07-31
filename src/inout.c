@@ -1312,22 +1312,32 @@ draw_line_sort(int ln)
 		/* must correspond with SORT_XXX */
 		"show hidden .files",
 		"show hidden .files, except in home directory",
-		"do not show hidden files"
+		"do not show hidden files",
+		/* */
+		"Show link targets"
 	};
 
-	if (ln == 7) {
+	if (ln == 7 || ln == 11) {
 		putstr_trunc("",display.pancols,0);
 		return;
 	}
-	if (ln > 6)
+	if (ln > 6 && ln < 12)
 	{
 		addstr(config_num(CFG_SHOW_HIDDEN) == ln-8 ? "(x) " : "( ) ");
 		putstr_trunc(description[ln-1],display.pancols-4,0);
-	} else
+		return;
+	}
+	if (ln < 7)
 	{
 		addstr(panel_sort.order == ln ? "(x" : "( ");	/* 2 */
 		addstr(") sort by ");				/* 10 */
 		putstr_trunc(description[ln],display.pancols - 12,0);
+		return;
+	}
+	if (ln == 12)
+	{
+		addstr(config_num(CFG_SHOW_LINKTRGT) ? "[ ] " : "[x] ");
+		putstr_trunc("show link targets",display.pancols-4,0);
 	}
 }
 
