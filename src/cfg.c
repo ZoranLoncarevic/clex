@@ -106,7 +106,10 @@ static CNUM table_numeric[] = {
 	{ CFG_SHOW_HIDDEN,	0, 0, 2, 0, 0, 0,
 		{	"Show hidden .files",
 			"Show hidden .files, except in home directory",
-			"Do not show hidden .files" } }
+			"Do not show hidden .files" } },
+	{ CFG_SHOW_LINKTRGT,	0, 0, 1, 0, 0, 0,
+		{	"Show link target",
+			"Do not show link target  " } },
 };
 
 typedef struct {
@@ -178,7 +181,8 @@ static struct {
 	{ CFG_H_SIZE,		"History panel size" },
 	{ CFG_HELPFILE,		"External helpfile "
 						"(NONE = use built-in help instead)" },
-	{ CFG_SHOW_HIDDEN,	"Appearance: Weather to show hidden .files" },
+	{ CFG_SHOW_HIDDEN,	"Appearance: Wether to show hidden .files" },
+	{ CFG_SHOW_LINKTRGT,	"Appearance: Wether to show link targets" },
 	{ CFG_KILOBYTE,		"Appearance: Filesize unit definition" },
 	{ CFG_LAYOUT,		"Appearance: "
 		"Which file panel layout is active" },
@@ -239,7 +243,8 @@ static CONFIG_ENTRY config[CFG_VARIABLES] = {
 	{ "H_PANEL_SIZE",	0,0,0,0,0 },
 	{ "VIEWER_CMD",		0,0,0,0,0 },
 	{ "NOPROMPT_CMDS",	0,0,0,0,0 },
-	{ "SHOW_HIDDEN",	0,0,0,0,0 }
+	{ "SHOW_HIDDEN",	0,0,0,0,0 },
+	{ "SHOW_LINKTRGT",	0,0,0,0,0 }
 };	/* must exactly match CFG_XXX #defines */
 
 /* 'move' values MOV_X2Y understood by set_value() */

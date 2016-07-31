@@ -1205,7 +1205,7 @@ draw_line_file(int ln)
 
 	/* 10 columns reserved for the filename */
 	width = 10 + print_fields(pfe,display.pancols - 10,layout_panel);
-	if (!pfe->symlink)
+	if (!pfe->symlink || config_num(CFG_SHOW_LINKTRGT))
 		putstr_trunc(SDSTR(pfe->file),width,0);
 	else {
 		width -= putstr_trunc(SDSTR(pfe->file),width,OPT_NOPAD);
