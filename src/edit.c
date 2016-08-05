@@ -33,6 +33,8 @@
 #define ROUND_UP(X) ((X + OFFSET_STEP - 1) / OFFSET_STEP * OFFSET_STEP)
 #define ROUND_DOWN(X) ((X) / OFFSET_STEP * OFFSET_STEP)
 
+FLAG specialF = 0;
+
 /* adjust 'offset' so the cursor is visible */
 int
 edit_adjust(void)
@@ -528,7 +530,8 @@ edit_macro(const char *macro)
 
 			/* now handle $x */
 			if (ch == 'f' && panel->cnt > 0) {
-				ch = ppanel_file->selected && kbd_esc() ? 'S' : 'F';
+				ch = ppanel_file->selected &&
+				     (kbd_esc() || specialF) ? 'S' : 'F';
 				if (ch == 'F' && ppanel_file->selected
 				  && config_num(CFG_WARN_SELECT))
 					win_remark("press <ESC> before <Fn> if you "

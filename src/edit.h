@@ -53,3 +53,5 @@ extern void cx_insert_fullpath(void);
 extern void cx_insert_d1(void);
 extern void cx_insert_d2(void);
 extern void cx_insert_link(void);
+
+extern FLAG specialF;
