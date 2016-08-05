@@ -783,6 +783,11 @@ config_apply(void)
 		hist_reconfig();
 	if (config[CFG_NOPROMPT_CMDS].changed)
 		exec_nplist_reconfig();
+	for(i = CFG_CMD_F3; i <= CFG_CMD_F12; i++)
+		if (config[i].changed) {
+			template_aliases_reconfig();
+			break;
+		}
 
 	if (prompt)
 		exec_prompt_reconfig();

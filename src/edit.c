@@ -491,6 +491,7 @@ edit_putstr(const char *str)
 
 /*
  * insert string, expand $x variables:
+ *   $/ is ignored
  *   $$ -> literal $
  *   $1 -> current directory name (primary panel's directory)
  *   $2 -> secondary directory name (secondary panel's directory)
@@ -569,6 +570,10 @@ edit_macro(const char *macro)
 					edit_nu_insertstr(SDSTR(pfe->file),1);
 				}
 				break;
+			case '/':
+				edit_update();
+				if (curs >= 0) textline->curs = curs;
+				return;
 			default:
 				ins = insert_space(2);
 				ins[0] = '$';

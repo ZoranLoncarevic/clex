@@ -58,6 +58,7 @@ static int cmd_index;		/* which parameter is the command
 							   to be executed */
 #define MAX_NPL_CMDS 128
 static char *nplist[MAX_NPL_CMDS+1];
+static const char *template_aliases[11];
 
 void
 exec_initialize(void)
@@ -68,6 +69,7 @@ exec_initialize(void)
 	exec_shell_reconfig();
 	exec_prompt_reconfig();	/* prompt needs to know the shell */
 	exec_nplist_reconfig();
+	template_aliases_reconfig();
 }
 
 static int
@@ -192,6 +194,20 @@ exec_nplist_reconfig(void)
 
 	us_copy(&dup,config_str(CFG_NOPROMPT_CMDS));
 	split_str(USTR(dup),nplist,' ',MAX_NPL_CMDS);
+}
+
+void
+template_aliases_reconfig(void)
+{
+	int i;
+	const char *str;
+
+	for(i = CFG_CMD_F3; i <= CFG_CMD_F12; i++)
+	{
+		for(str = config_str(i); *str; str++)
+			if (str[0] == '$' && str[1] == '/') break;
+		template_aliases[i-CFG_CMD_F3] = *str ? str+2 : str;
+	}
 }
 
 int
@@ -481,6 +497,16 @@ execute_cmd(const char *cmd, FLAG prompt_user)
 		win_remark("directory changed");
 		return 1;
 	}
+
+	/* expand template aliases */
+	for(i = CFG_CMD_F3; i <= CFG_CMD_F12; i++)
+		if (!strcmp(template_aliases[i-CFG_CMD_F3],cmd)) {
+			edit_nu_kill();
+			specialF = 1;
+			edit_macro(config_str(i));
+			specialF = 0;
+			return 0;
+		}
 
 	/* is cmd in the list of interactive commands?  */
 	if (prompt_user) {
