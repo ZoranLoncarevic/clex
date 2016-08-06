@@ -837,6 +837,22 @@ cx_config_save(void)
 }
 
 void
+cx_config_save_1(void)
+{
+	cx_config_save_2();
+	config_save();
+	next_mode = MODE_SPECIAL_RETURN;
+}
+
+void
+cx_config_save_2(void)
+{
+	config_changes();
+	config_apply();
+	next_mode = MODE_SPECIAL_RETURN;
+}
+
+void
 cx_config_enter(void)
 {
 	CNUM *pnum;

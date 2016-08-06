@@ -9,6 +9,8 @@ extern void cx_config_str_enter(void);
 extern void cx_config_default(void);
 extern void cx_config_original(void);
 extern void cx_config_save(void);
+extern void cx_config_save_1(void);
+extern void cx_config_save_2(void);
 extern void cx_config_admin_save(void);
 extern void config_set_num(int code, int new_value);
 extern void config_set_str(int code, char *new_value);

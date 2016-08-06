@@ -153,6 +153,9 @@ static KEY_BINDING tab_cfg[] = {
 	{ 0,  CH_CTRL('M'),	cx_config_enter,	0			},
 	{ 0,  's',			cx_config_default,	OPT_CURS	},
 	{ 0,  'o',			cx_config_original,	OPT_CURS	},
+	{ 0,  CH_CTRL('A'),	cx_config_save_2,	0			},
+	{ 0,  CH_CTRL('S'),	cx_config_save_1,	0			},
+	{ 0,  CH_CTRL('W'),	cx_config_save_2,	0			},
 	{ 0,  0,			0,					0			}
 };
 
