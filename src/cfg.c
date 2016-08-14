@@ -121,12 +121,12 @@ typedef struct {
 } CSTR;
 
 static CSTR table_string[] = {
-	{ CFG_CMD_F3,		0,		"more $f",		"", "" },
+	{ CFG_CMD_F3,		0,		"less $f",		"", "" },
 	{ CFG_CMD_F4,		0,		"vi $f",		"", "" },
-	{ CFG_CMD_F5,		0,		"cp -ir $f $2",	"", "" },
-	{ CFG_CMD_F6,		0,		"mv -i $f $2",	"", "" },
+	{ CFG_CMD_F5,		0,		"cp -ir $f $2 $/cp",	"", "" },
+	{ CFG_CMD_F6,		0,		"mv -i $f $2 $/mv",	"", "" },
 	{ CFG_CMD_F7,		0,		"mkdir ",		"", "" },
-	{ CFG_CMD_F8,		0,		"rm $f",		"", "" },
+	{ CFG_CMD_F8,		0,		"rm $f $/rm",		"", "" },
 	{ CFG_CMD_F9,		0,		"lpr $f",		"", "" },
 	{ CFG_CMD_F10,		0,		"",				"", "" },
 	{ CFG_CMD_F11,		0,		"",				"", "" },
@@ -141,7 +141,7 @@ static CSTR table_string[] = {
 	{ CFG_PROMPT,		"AUTO",	"",				"", "" },
 	{ CFG_QUOTE,		0,		"",				"", "" },
 	{ CFG_SHELLPROG,	"AUTO",	"",				"", "" },
-	{ CFG_VIEWER_CMD,		0,		"less $f",		"", "" },
+	{ CFG_VIEWER_CMD,		0,		"less $f || true",		"", "" },
 	{ CFG_NOPROMPT_CMDS,		0,		"less man vi vim",		"", "" }
 };
 
