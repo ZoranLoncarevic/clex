@@ -288,8 +288,9 @@ void
 cx_launch_file_viewer(void)
 {
 	edit_macro(config_str(CFG_VIEWER_CMD));
-	if (execute_cmd(USTR(textline->line),DONOT_PROMPT_USER))
-		{ cx_edit_kill(); undo_reset(); }
+	execute(USTR(textline->line),DONOT_PROMPT_USER);
+	curses_restart();
+	cx_edit_kill();	undo_reset();
 }
 
 /* pressed <ENTER> - several functions: exec, chdir and insert */
