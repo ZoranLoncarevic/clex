@@ -1407,7 +1407,7 @@ draw_panel_line(int y)
 	else
 		(*draw_line[panel->type])(ln);
 	if (panel->curs == ln) {
-		addch(' ');
+		addch('.');
 		attrset(A_NORMAL);
 		addch('<');
 	}
