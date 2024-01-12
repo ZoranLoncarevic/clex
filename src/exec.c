@@ -49,6 +49,8 @@
 #include "userdata.h"		/* dir_tilde() */
 #include "ustring.h"		/* us_copy() */
 #include "xterm_title.h"	/* xterm_title_set() */
+#include "directory.h"		/* filepos_save() */
+#include "sort.h"			/* sort_files() */
 
 extern int errno;
 
@@ -496,6 +498,25 @@ execute_cmd(const char *cmd, FLAG prompt_user)
 		win_panel();
 		win_remark("directory changed");
 		return 1;
+	}
+
+	/* intercept ad hoc cdgit command */
+	if (!strncmp(cmd,"cdgit",5)) {
+		/* change directory */
+		if (changedir(dir_tilde("~/Sources/Github/")) != 0)
+			return 0;
+		/* sort order */
+		panel_sort.order = 4;
+		filepos_save();
+		sort_files();
+		filepos_set();
+		ppanel_file->other->expired = 1;
+		/* update panel */
+		win_heading();
+		win_panel();
+		win_remark("directory changed");
+		/* and proceed to execut git command ... */
+		cmd = cmd + 2;
 	}
 
 	/* expand template aliases */
