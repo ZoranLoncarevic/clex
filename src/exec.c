@@ -488,6 +488,10 @@ execute_cmd(const char *cmd, FLAG prompt_user)
 	static FLAG hint = 1;
 	int do_exec, warn_level, i;
 	const char *dir, *s1, *s2;
+	char *mod_cmd, *go_filename;
+	FLAG wcd = 0;
+	FILE *go_file;
+	char line_buff[1024];
 
 	/* intercept single 'cd' command */
 	if ( (dir = check_cd(cmd)) ) {
@@ -498,6 +502,24 @@ execute_cmd(const char *cmd, FLAG prompt_user)
 		win_panel();
 		win_remark("directory changed");
 		return 1;
+	}
+
+	/* intercept 'wcmd' command */
+	if (!strncmp(cmd,"wcd ",3)) {
+		mod_cmd = emalloc(strlen(cmd)+6);
+		strcpy(mod_cmd, "wcd.exec ");
+		strcat(mod_cmd,cmd+4);
+		cmd = mod_cmd;
+		wcd = 1;
+		prompt_user = 0;
+		if (getenv("WCDHOME"))
+			go_filename = strdup(getenv("WCDHOME"));
+		else
+			go_filename = strdup(getenv("HOME"));
+		if (!go_filename) return 0;
+		go_filename = erealloc(go_filename, strlen(go_filename)+15);
+		strcat(go_filename, "/bin/wcd.go");
+		unlink(go_filename);
 	}
 
 	/* intercept ad hoc cdgit command */
@@ -552,6 +574,23 @@ execute_cmd(const char *cmd, FLAG prompt_user)
 	do_exec = warn_level == 0 || user_confirm();
 	if (do_exec)
 		hist_save(cmd,execute(cmd,prompt_user) != 0);
+
+	if (wcd) {
+		go_file = fopen(go_filename, "r");
+		free(go_filename);
+		free(mod_cmd);
+		if (go_file)
+			for ( ; fgets(line_buff,sizeof(line_buff),go_file); )
+				if (!strncmp(line_buff,"cd ",3)) {
+					line_buff[strlen(line_buff)-1] = '\0';
+					if ( (dir = check_cd(line_buff)) )
+						if (changedir(dir) != 0)
+							return 0;
+					win_heading();
+					win_panel();
+					win_remark("directory changed");
+				}
+	}
 
 	curses_restart();
 	if (warn_level >= 2 && TCLR(hint))
