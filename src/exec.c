@@ -488,10 +488,11 @@ execute_cmd(const char *cmd, FLAG prompt_user)
 	static FLAG hint = 1;
 	int do_exec, warn_level, i;
 	const char *dir, *s1, *s2;
-	char *mod_cmd, *go_filename;
-	FLAG wcd = 0;
+	char *mod_cmd = NULL, *go_filename = NULL;
+	FLAG wcd = 0, br = 0;
 	FILE *go_file;
 	char line_buff[1024];
+	int fd;
 
 	/* intercept single 'cd' command */
 	if ( (dir = check_cd(cmd)) ) {
@@ -521,6 +522,25 @@ execute_cmd(const char *cmd, FLAG prompt_user)
 		strcat(go_filename, "/bin/wcd.go");
 		unlink(go_filename);
 	}
+
+	/* intercept 'br' command */
+	if (!strcmp(cmd,"br") || !strncmp(cmd,"br ",3)) {
+		go_filename = emalloc(16);
+		strcpy(go_filename,"/tmp/tmpXXXXXX");
+		fd = mkstemp(go_filename);
+		close(fd);
+		mod_cmd = emalloc(strlen(cmd)+32);
+		strcpy(mod_cmd, "broot --outcmd ");
+		strcat(mod_cmd, go_filename);
+		strcat(mod_cmd, " ");
+		if (cmd[2] && cmd[3])
+			strcat(mod_cmd,cmd+3);
+		cmd = mod_cmd;
+		br = 1;
+		curses_stop();
+		prompt_user = 0;
+	}
+
 
 	/* intercept ad hoc cdgit command */
 	if (!strncmp(cmd,"cdgit",5)) {
@@ -575,10 +595,8 @@ execute_cmd(const char *cmd, FLAG prompt_user)
 	if (do_exec)
 		hist_save(cmd,execute(cmd,prompt_user) != 0);
 
-	if (wcd) {
+	if (wcd || br) {
 		go_file = fopen(go_filename, "r");
-		free(go_filename);
-		free(mod_cmd);
 		if (go_file)
 			for ( ; fgets(line_buff,sizeof(line_buff),go_file); )
 				if (!strncmp(line_buff,"cd ",3)) {
@@ -588,8 +606,12 @@ execute_cmd(const char *cmd, FLAG prompt_user)
 							return 0;
 					win_heading();
 					win_panel();
+					curses_restart();
 					win_remark("directory changed");
 				}
+		unlink(go_filename);
+		free(go_filename);
+		free(mod_cmd);
 	}
 
 	curses_restart();
